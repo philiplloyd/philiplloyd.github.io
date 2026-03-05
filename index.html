@@ -25,120 +25,66 @@ body {
   overflow-x: hidden;
 }
 
-/* NAV */
 nav {
-  position: fixed;
-  top: 0; left: 0; right: 0;
-  z-index: 99;
-  padding: 28px 56px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  position: fixed; top: 0; left: 0; right: 0; z-index: 99;
+  padding: 28px 56px; display: flex; justify-content: space-between; align-items: center;
   background: linear-gradient(to bottom, rgba(8,8,8,0.9), transparent);
 }
-.nav-logo {
-  font-family: 'DM Mono', monospace;
-  font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--warm);
-}
+.nav-logo { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--warm); }
 .nav-links { display: flex; gap: 40px; list-style: none; }
-.nav-links a {
-  font-family: 'DM Mono', monospace;
-  font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
-  text-decoration: none; color: rgba(240,235,224,0.45); transition: color 0.3s;
-}
+.nav-links a { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; text-decoration: none; color: rgba(240,235,224,0.45); transition: color 0.3s; }
 .nav-links a:hover { color: var(--cream); }
 
-/* ── HERO WITH VIDEO BG ── */
+/* HERO */
 .hero {
-  height: 100vh;
-  position: relative;
-  display: flex;
-  align-items: flex-end;
-  padding: 0 56px 72px;
-  overflow: hidden;
+  height: 100vh; position: relative;
+  display: flex; align-items: flex-end;
+  padding: 0 56px 72px; overflow: hidden;
 }
 
-/* YouTube iframe as full-bleed background */
-.hero-video-wrap {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  overflow: hidden;
-}
-
-/* Oversized iframe trick to hide YouTube UI bars */
-.hero-video-wrap iframe {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  /* 16:9 but tall enough to fill any viewport */
-  width: 177.78vh;  /* 16/9 * 100vh */
-  height: 100vh;
-  min-width: 100vw;
-  min-height: 56.25vw; /* 9/16 * 100vw */
-}
-
-/* Dark overlay — keeping the look you liked */
-.hero-overlay {
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(to top, rgba(8,8,8,0.95) 0%, rgba(8,8,8,0.55) 40%, rgba(8,8,8,0.35) 100%);
-  z-index: 1;
-}
-
-/* Fallback image shown until video loads */
 .hero-fallback {
-  position: absolute;
-  inset: 0;
+  position: absolute; inset: 0;
   background-image: url('Lexus-August-2023-6-_Ocean.jpg');
-  background-size: cover;
-  background-position: center;
-  filter: brightness(0.5);
-  z-index: 0;
+  background-size: cover; background-position: center;
+  filter: brightness(0.5); z-index: 0;
   transition: opacity 1.5s ease;
 }
 .hero-fallback.hidden { opacity: 0; }
 
+.hero-video-wrap {
+  position: absolute; inset: 0; z-index: 0; pointer-events: none; overflow: hidden;
+}
+.hero-video-wrap iframe {
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 177.78vh; height: 100vh;
+  min-width: 100vw; min-height: 56.25vw;
+}
+
+.hero-overlay {
+  position: absolute; inset: 0; z-index: 1;
+  background: linear-gradient(to top, rgba(8,8,8,0.95) 0%, rgba(8,8,8,0.55) 40%, rgba(8,8,8,0.35) 100%);
+}
+
 .hero-content {
-  position: relative;
-  z-index: 2;
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  width: 100%;
+  position: relative; z-index: 2;
+  display: flex; justify-content: space-between; align-items: flex-end; width: 100%;
 }
-
-.hero-name {
-  font-size: clamp(64px, 9vw, 120px);
-  font-weight: 300; line-height: 0.9; letter-spacing: -0.02em;
-}
+.hero-name { font-size: clamp(64px, 9vw, 120px); font-weight: 300; line-height: 0.9; letter-spacing: -0.02em; }
 .hero-name em { font-style: italic; color: var(--warm); }
-
-.hero-right {
-  text-align: right; display: flex; flex-direction: column; gap: 8px; align-items: flex-end;
-}
-.hero-role {
-  font-family: 'DM Mono', monospace; font-size: 10px;
-  letter-spacing: 0.2em; text-transform: uppercase; color: var(--warm);
-}
-.hero-desc {
-  font-size: 17px; font-weight: 300; line-height: 1.6;
-  color: rgba(240,235,224,0.65); max-width: 340px;
-}
+.hero-right { text-align: right; display: flex; flex-direction: column; gap: 8px; align-items: flex-end; }
+.hero-role { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--warm); }
+.hero-desc { font-size: 17px; font-weight: 300; line-height: 1.6; color: rgba(240,235,224,0.65); max-width: 340px; }
 
 .scroll-line {
   width: 1px; height: 48px;
   background: linear-gradient(to bottom, var(--warm), transparent);
   animation: scrollPulse 2s ease infinite;
-  margin: 28px auto 0;
-  position: relative; z-index: 2;
+  margin: 28px auto 0; position: relative; z-index: 2;
 }
 @keyframes scrollPulse { 0%,100%{opacity:0.3;} 50%{opacity:1;} }
 
-/* ── VIDEO CAROUSEL ── */
+/* VIDEO CAROUSEL */
 #videos { background: #040404; }
 
 .video-section-header {
@@ -146,32 +92,23 @@ nav {
   display: flex; justify-content: space-between; align-items: flex-end;
 }
 .section-label {
-  font-family: 'DM Mono', monospace;
-  font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--warm);
-  display: flex; align-items: center; gap: 20px;
+  font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.25em;
+  text-transform: uppercase; color: var(--warm); display: flex; align-items: center; gap: 20px;
 }
 .section-label::after { content:''; display:block; width:60px; height:1px; background:var(--line); }
+.carousel-counter { font-family:'DM Mono',monospace; font-size:11px; letter-spacing:0.15em; color:var(--dim); }
+.carousel-counter span { color:var(--warm); }
 
-.carousel-counter {
-  font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.15em; color: var(--dim);
-}
-.carousel-counter span { color: var(--warm); }
-
-.video-main {
-  position: relative; width: 100%; margin-top: 40px; background: #000;
-}
-.video-main iframe {
-  width: 100%; aspect-ratio: 16/9; border: none; display: block;
-}
+.video-main { position:relative; width:100%; margin-top:40px; background:#000; }
+.video-main iframe { width:100%; aspect-ratio:16/9; border:none; display:block; }
 .video-main::after {
-  content: '';
-  position: absolute; bottom:0; left:0; right:0; height:120px;
-  background: linear-gradient(to top, rgba(4,4,4,1), transparent);
-  z-index: 2; pointer-events: none;
+  content:''; position:absolute; bottom:0; left:0; right:0; height:120px;
+  background:linear-gradient(to top,rgba(4,4,4,1),transparent);
+  z-index:2; pointer-events:none;
 }
 
 .video-arrows {
-  position: absolute; top:50%; transform:translateY(-50%);
+  position:absolute; top:50%; transform:translateY(-50%);
   z-index:10; width:100%; display:flex; justify-content:space-between;
   padding:0 24px; pointer-events:none;
 }
@@ -193,28 +130,32 @@ nav {
   cursor:pointer; transition:all 0.3s; display:flex; align-items:center; gap:8px;
 }
 .mute-btn:hover { color:var(--warm); border-color:var(--warm); }
-.mute-btn svg { width:12px; height:12px; fill:currentColor; }
 
-.thumb-strip {
-  display:flex; gap:3px; padding:0 0 64px;
-  overflow-x:auto; scrollbar-width:none; -ms-overflow-style:none;
+/* Auto-advance indicator */
+.autoplay-bar {
+  position: absolute; bottom: 0; left: 0;
+  height: 2px; background: var(--warm);
+  width: 0%; z-index: 10;
+  transition: none;
 }
+.autoplay-bar.animating {
+  transition: width linear;
+}
+
+.thumb-strip { display:flex; gap:3px; padding:0 0 64px; overflow-x:auto; scrollbar-width:none; -ms-overflow-style:none; }
 .thumb-strip::-webkit-scrollbar { display:none; }
 .thumb { flex:0 0 calc(12.5% - 3px); min-width:120px; position:relative; cursor:pointer; overflow:hidden; background:#111; }
 .thumb img { width:100%; aspect-ratio:16/9; object-fit:cover; display:block; transition:filter 0.3s,transform 0.4s; filter:brightness(0.4) grayscale(0.3); }
 .thumb.active img { filter:brightness(0.9); }
 .thumb:hover img { filter:brightness(0.7); transform:scale(1.03); }
-.thumb-bar { position:absolute; bottom:0; left:0; height:2px; background:var(--warm); width:0%; transition:width 0.15s linear; }
+.thumb-bar { position:absolute; bottom:0; left:0; height:2px; background:var(--warm); width:0%; }
 .thumb.active .thumb-bar { width:100%; }
 .thumb-num { position:absolute; top:6px; left:8px; font-family:'DM Mono',monospace; font-size:8px; letter-spacing:0.15em; color:rgba(240,235,224,0.5); }
 .thumb.active .thumb-num { color:var(--warm); }
 
-/* ── WORK ── */
+/* WORK */
 #work { padding:100px 56px; }
-.work-label {
-  font-family:'DM Mono',monospace; font-size:10px; letter-spacing:0.25em; text-transform:uppercase;
-  color:var(--warm); margin-bottom:48px; display:flex; align-items:center; gap:20px;
-}
+.work-label { font-family:'DM Mono',monospace; font-size:10px; letter-spacing:0.25em; text-transform:uppercase; color:var(--warm); margin-bottom:48px; display:flex; align-items:center; gap:20px; }
 .work-label::after { content:''; flex:1; height:1px; background:var(--line); max-width:120px; }
 .work-grid { display:grid; grid-template-columns:1fr 1fr; gap:3px; }
 .work-item { position:relative; overflow:hidden; cursor:pointer; background:#111; }
@@ -228,14 +169,12 @@ nav {
 .work-caption-title { font-size:18px; font-weight:300; color:var(--cream); margin-bottom:4px; }
 .work-caption-sub { font-family:'DM Mono',monospace; font-size:9px; letter-spacing:0.18em; text-transform:uppercase; color:var(--warm); }
 
-/* LIGHTBOX */
 .lightbox { position:fixed; inset:0; background:rgba(0,0,0,0.95); z-index:200; display:flex; align-items:center; justify-content:center; opacity:0; pointer-events:none; transition:opacity 0.4s; }
 .lightbox.open { opacity:1; pointer-events:all; }
 .lightbox img { max-width:90vw; max-height:88vh; object-fit:contain; }
 .lightbox-close { position:absolute; top:28px; right:36px; font-family:'DM Mono',monospace; font-size:11px; letter-spacing:0.2em; color:var(--dim); cursor:pointer; text-transform:uppercase; transition:color 0.3s; }
 .lightbox-close:hover { color:var(--cream); }
 
-/* CONTACT */
 #contact { border-top:1px solid var(--line); display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:center; padding:120px 56px; }
 .contact-heading { font-size:clamp(48px,5vw,72px); font-weight:300; line-height:1.05; letter-spacing:-0.02em; }
 .contact-heading em { font-style:italic; color:var(--warm); }
@@ -252,19 +191,14 @@ footer span { font-family:'DM Mono',monospace; font-size:9px; letter-spacing:0.1
 .reveal.visible { opacity:1; transform:translateY(0); }
 
 @media(max-width:768px){
-  nav { padding:20px 24px; }
-  .nav-links { display:none; }
-  .hero { padding:0 24px 56px; }
-  .hero-right { display:none; }
-  .hero-video-wrap iframe { width:100vw; height:56.25vw; min-height:unset; top:50%; }
-  .video-section-header { padding:56px 24px 0; }
-  .thumb { min-width:90px; }
-  #work { padding:72px 24px; }
-  .work-grid { grid-template-columns:1fr; }
-  .work-item:nth-child(2) { grid-row:auto; }
-  .work-item { aspect-ratio:16/9; }
-  #contact { grid-template-columns:1fr; padding:72px 24px; }
-  footer { padding:20px 24px; flex-direction:column; gap:8px; }
+  nav{padding:20px 24px;} .nav-links{display:none;}
+  .hero{padding:0 24px 56px;} .hero-right{display:none;}
+  .hero-video-wrap iframe{width:100vw;height:56.25vw;min-height:unset;}
+  .video-section-header{padding:56px 24px 0;} .thumb{min-width:90px;}
+  #work{padding:72px 24px;} .work-grid{grid-template-columns:1fr;}
+  .work-item:nth-child(2){grid-row:auto;} .work-item{aspect-ratio:16/9;}
+  #contact{grid-template-columns:1fr;padding:72px 24px;}
+  footer{padding:20px 24px;flex-direction:column;gap:8px;}
 }
 </style>
 </head>
@@ -279,25 +213,14 @@ footer span { font-family:'DM Mono',monospace; font-size:9px; letter-spacing:0.1
   </ul>
 </nav>
 
-<!-- HERO — video background -->
+<!-- HERO -->
 <section class="hero">
-
-  <!-- Fallback image while video loads -->
   <div class="hero-fallback" id="heroFallback"></div>
-
-  <!-- YouTube looping background video -->
   <div class="hero-video-wrap">
-    <iframe
-      id="heroVideo"
-      src="https://www.youtube.com/embed/vwfkv6oNa10?autoplay=1&mute=1&loop=1&playlist=vwfkv6oNa10&controls=0&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3&disablekb=1&enablejsapi=1"
-      title="Hero background"
-      frameborder="0"
-      allow="autoplay; encrypted-media">
-    </iframe>
+    <!-- Hero uses a separate player div, controlled via YT API -->
+    <div id="heroPlayer"></div>
   </div>
-
   <div class="hero-overlay"></div>
-
   <div class="hero-content">
     <h1 class="hero-name">Philip<br><em>Lloyd</em></h1>
     <div class="hero-right">
@@ -316,14 +239,10 @@ footer span { font-family:'DM Mono',monospace; font-size:9px; letter-spacing:0.1
   </div>
 
   <div class="video-main" id="videoMain">
-    <iframe
-      id="mainIframe"
-      src="https://www.youtube.com/embed/vwfkv6oNa10?autoplay=1&mute=1&loop=0&controls=1&modestbranding=1&rel=0&enablejsapi=1"
-      title="Campaign video"
-      frameborder="0"
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-      allowfullscreen>
-    </iframe>
+    <!-- Carousel uses a second YT player div -->
+    <div id="carouselPlayer" style="width:100%;aspect-ratio:16/9;"></div>
+
+    <div class="autoplay-bar" id="autoplayBar"></div>
 
     <div class="video-arrows">
       <button class="arrow-btn" id="prevBtn" aria-label="Previous">
@@ -335,7 +254,7 @@ footer span { font-family:'DM Mono',monospace; font-size:9px; letter-spacing:0.1
     </div>
 
     <button class="mute-btn" id="muteBtn">
-      <svg id="muteIcon" viewBox="0 0 24 24"><path d="M11 5L6 9H2v6h4l5 4V5zM23 9l-6 6M17 9l6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/></svg>
+      <svg id="muteIcon" viewBox="0 0 24 24" width="12" height="12"><path d="M11 5L6 9H2v6h4l5 4V5zM23 9l-6 6M17 9l6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/></svg>
       <span id="muteLabel">Muted</span>
     </button>
   </div>
@@ -381,80 +300,145 @@ footer span { font-family:'DM Mono',monospace; font-size:9px; letter-spacing:0.1
   <span>Account Director · London</span>
 </footer>
 
+<!-- YouTube IFrame API -->
+<script src="https://www.youtube.com/iframe_api"></script>
+
 <script>
-// Fade out fallback once video has had time to load
-setTimeout(() => {
-  document.getElementById('heroFallback').classList.add('hidden');
-}, 3000);
-
-// Scroll reveal
-const reveals = document.querySelectorAll('.reveal');
-const obs = new IntersectionObserver(entries => {
-  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
-}, { threshold: 0.1 });
-reveals.forEach(r => obs.observe(r));
-
-// Lightbox
-function openLightbox(src) {
-  document.getElementById('lightboxImg').src = src;
-  document.getElementById('lightbox').classList.add('open');
-  document.body.style.overflow = 'hidden';
-}
-function closeLightbox() {
-  document.getElementById('lightbox').classList.remove('open');
-  document.body.style.overflow = '';
-}
-document.addEventListener('keydown', e => {
-  if(e.key === 'Escape') closeLightbox();
-  if(e.key === 'ArrowLeft') goTo(current - 1);
-  if(e.key === 'ArrowRight') goTo(current + 1);
-});
-
-// Videos
 const videos = [
-  { id: 'vwfkv6oNa10' },
-  { id: '3FoGwuCYx4g' },
-  { id: 'a4OSVXWtliY' },
-  { id: '0zOlhs-IXCs' },
-  { id: 'RloQycScUJU' },
-  { id: 'QAxmcfkEMP4' },
-  { id: '-HvoasdgXYc' },
-  { id: '7Nx8S4PLD5w' },
+  'vwfkv6oNa10',
+  '3FoGwuCYx4g',
+  'a4OSVXWtliY',
+  '0zOlhs-IXCs',
+  'RloQycScUJU',
+  'QAxmcfkEMP4',
+  '-HvoasdgXYc',
+  '7Nx8S4PLD5w',
 ];
 
 let current = 0;
 let isMuted = true;
-const iframe = document.getElementById('mainIframe');
-const counter = document.getElementById('currentSlide');
-const stripEl = document.getElementById('thumbStrip');
+let heroPlayer = null;
+let carouselPlayer = null;
+let autoplayTimer = null;
 
-videos.forEach((v, i) => {
-  const t = document.createElement('div');
-  t.className = 'thumb' + (i === 0 ? ' active' : '');
-  t.innerHTML = `
-    <img src="https://img.youtube.com/vi/${v.id}/mqdefault.jpg" alt="Video ${i+1}" loading="lazy">
-    <div class="thumb-bar"></div>
-    <span class="thumb-num">0${i+1}</span>
-  `;
-  t.addEventListener('click', () => goTo(i));
-  stripEl.appendChild(t);
-});
+// ── YouTube API ready callback ──
+window.onYouTubeIframeAPIReady = function() {
 
+  // Hero background player — looping, muted, no controls
+  heroPlayer = new YT.Player('heroPlayer', {
+    videoId: videos[0],
+    playerVars: {
+      autoplay: 1,
+      mute: 1,
+      loop: 1,
+      playlist: videos[0],
+      controls: 0,
+      showinfo: 0,
+      rel: 0,
+      modestbranding: 1,
+      iv_load_policy: 3,
+      disablekb: 1,
+    },
+    events: {
+      onReady: function(e) {
+        e.target.playVideo();
+        // Fade out fallback image once hero video starts
+        setTimeout(() => {
+          document.getElementById('heroFallback').classList.add('hidden');
+        }, 2000);
+      },
+      onStateChange: function(e) {
+        // Hero: when video ends, play next one in background
+        if(e.data === YT.PlayerState.ENDED) {
+          const nextHeroIndex = (videos.indexOf(heroPlayer.getVideoData().video_id) + 1) % videos.length;
+          heroPlayer.loadVideoById({ videoId: videos[nextHeroIndex], suggestedQuality: 'hd720' });
+        }
+      }
+    }
+  });
+
+  // Carousel player
+  carouselPlayer = new YT.Player('carouselPlayer', {
+    videoId: videos[0],
+    playerVars: {
+      autoplay: 1,
+      mute: 1,
+      controls: 1,
+      rel: 0,
+      modestbranding: 1,
+    },
+    events: {
+      onReady: function(e) {
+        e.target.playVideo();
+      },
+      onStateChange: function(e) {
+        if(e.data === YT.PlayerState.ENDED) {
+          // Auto-advance to next video
+          goTo(current + 1);
+        }
+        // Clear progress bar animation when manually interacted
+        if(e.data === YT.PlayerState.PLAYING) {
+          startAutoplayBar();
+        } else {
+          stopAutoplayBar();
+        }
+      }
+    }
+  });
+};
+
+// ── Autoplay progress bar ──
+let barTimeout = null;
+
+function startAutoplayBar() {
+  stopAutoplayBar();
+  if(!carouselPlayer) return;
+  const duration = carouselPlayer.getDuration();
+  if(!duration) return;
+  const bar = document.getElementById('autoplayBar');
+  bar.style.transition = 'none';
+  bar.style.width = '0%';
+  // Force reflow
+  bar.offsetWidth;
+  bar.classList.add('animating');
+  bar.style.transitionDuration = duration + 's';
+  bar.style.width = '100%';
+}
+
+function stopAutoplayBar() {
+  const bar = document.getElementById('autoplayBar');
+  bar.classList.remove('animating');
+  bar.style.transition = 'none';
+  bar.style.width = '0%';
+}
+
+// ── Navigate carousel ──
 function goTo(index) {
   current = (index + videos.length) % videos.length;
-  const v = videos[current];
-  const muteParam = isMuted ? '1' : '0';
-  iframe.src = `https://www.youtube.com/embed/${v.id}?autoplay=1&mute=${muteParam}&controls=1&modestbranding=1&rel=0&enablejsapi=1`;
-  counter.textContent = current + 1;
+  stopAutoplayBar();
+
+  if(carouselPlayer && carouselPlayer.loadVideoById) {
+    carouselPlayer.loadVideoById(videos[current]);
+    if(isMuted) carouselPlayer.mute();
+    else carouselPlayer.unMute();
+  }
+
+  document.getElementById('currentSlide').textContent = current + 1;
   document.querySelectorAll('.thumb').forEach((t, i) => t.classList.toggle('active', i === current));
-  const activeThumb = stripEl.children[current];
-  if(activeThumb) activeThumb.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+  const activeThumb = document.getElementById('thumbStrip').children[current];
+  if(activeThumb) activeThumb.scrollIntoView({ behavior:'smooth', block:'nearest', inline:'center' });
 }
 
 document.getElementById('prevBtn').addEventListener('click', () => goTo(current - 1));
 document.getElementById('nextBtn').addEventListener('click', () => goTo(current + 1));
 
-// Mute toggle
+document.addEventListener('keydown', e => {
+  if(e.key === 'ArrowLeft') goTo(current - 1);
+  if(e.key === 'ArrowRight') goTo(current + 1);
+  if(e.key === 'Escape') closeLightbox();
+});
+
+// ── Mute toggle ──
 const muteBtn = document.getElementById('muteBtn');
 const muteLabel = document.getElementById('muteLabel');
 const muteIcon = document.getElementById('muteIcon');
@@ -465,9 +449,43 @@ muteBtn.addEventListener('click', () => {
   muteIcon.innerHTML = isMuted
     ? `<path d="M11 5L6 9H2v6h4l5 4V5zM23 9l-6 6M17 9l6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/>`
     : `<path d="M11 5L6 9H2v6h4l5 4V5z" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/><path d="M15.54 8.46a5 5 0 010 7.07M19.07 4.93a10 10 0 010 14.14" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/>`;
-  const v = videos[current];
-  iframe.src = `https://www.youtube.com/embed/${v.id}?autoplay=1&mute=${isMuted ? '1' : '0'}&controls=1&modestbranding=1&rel=0&enablejsapi=1`;
+  if(carouselPlayer) {
+    if(isMuted) carouselPlayer.mute();
+    else carouselPlayer.unMute();
+  }
 });
+
+// ── Thumbnail strip ──
+const stripEl = document.getElementById('thumbStrip');
+videos.forEach((id, i) => {
+  const t = document.createElement('div');
+  t.className = 'thumb' + (i === 0 ? ' active' : '');
+  t.innerHTML = `
+    <img src="https://img.youtube.com/vi/${id}/mqdefault.jpg" alt="Video ${i+1}" loading="lazy">
+    <div class="thumb-bar"></div>
+    <span class="thumb-num">0${i+1}</span>
+  `;
+  t.addEventListener('click', () => goTo(i));
+  stripEl.appendChild(t);
+});
+
+// ── Scroll reveal ──
+const reveals = document.querySelectorAll('.reveal');
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+reveals.forEach(r => obs.observe(r));
+
+// ── Lightbox ──
+function openLightbox(src) {
+  document.getElementById('lightboxImg').src = src;
+  document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('open');
+  document.body.style.overflow = '';
+}
 </script>
 </body>
 </html>
