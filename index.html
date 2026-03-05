@@ -34,28 +34,21 @@ nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: linear-gradient(to bottom, rgba(8,8,8,0.95), transparent);
+  background: linear-gradient(to bottom, rgba(8,8,8,0.9), transparent);
 }
 .nav-logo {
   font-family: 'DM Mono', monospace;
-  font-size: 10px;
-  letter-spacing: 0.25em;
-  text-transform: uppercase;
-  color: var(--warm);
+  font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--warm);
 }
 .nav-links { display: flex; gap: 40px; list-style: none; }
 .nav-links a {
   font-family: 'DM Mono', monospace;
-  font-size: 10px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  text-decoration: none;
-  color: rgba(240,235,224,0.45);
-  transition: color 0.3s;
+  font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+  text-decoration: none; color: rgba(240,235,224,0.45); transition: color 0.3s;
 }
 .nav-links a:hover { color: var(--cream); }
 
-/* HERO */
+/* ── HERO WITH VIDEO BG ── */
 .hero {
   height: 100vh;
   position: relative;
@@ -64,29 +57,66 @@ nav {
   padding: 0 56px 72px;
   overflow: hidden;
 }
-.hero-bg {
-  position: absolute; inset: 0;
+
+/* YouTube iframe as full-bleed background */
+.hero-video-wrap {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* Oversized iframe trick to hide YouTube UI bars */
+.hero-video-wrap iframe {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  /* 16:9 but tall enough to fill any viewport */
+  width: 177.78vh;  /* 16/9 * 100vh */
+  height: 100vh;
+  min-width: 100vw;
+  min-height: 56.25vw; /* 9/16 * 100vw */
+}
+
+/* Dark overlay — keeping the look you liked */
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to top, rgba(8,8,8,0.95) 0%, rgba(8,8,8,0.55) 40%, rgba(8,8,8,0.35) 100%);
+  z-index: 1;
+}
+
+/* Fallback image shown until video loads */
+.hero-fallback {
+  position: absolute;
+  inset: 0;
   background-image: url('Lexus-August-2023-6-_Ocean.jpg');
   background-size: cover;
   background-position: center;
-  filter: brightness(0.45);
-  transform: scale(1.04);
-  transition: transform 8s ease;
+  filter: brightness(0.5);
+  z-index: 0;
+  transition: opacity 1.5s ease;
 }
-.hero-bg.loaded { transform: scale(1); }
-.hero-grad {
-  position: absolute; inset: 0;
-  background: linear-gradient(to top, rgba(8,8,8,0.92) 0%, rgba(8,8,8,0.2) 50%, transparent 100%);
-}
+.hero-fallback.hidden { opacity: 0; }
+
 .hero-content {
-  position: relative; z-index: 2;
-  display: flex; justify-content: space-between; align-items: flex-end; width: 100%;
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  width: 100%;
 }
+
 .hero-name {
   font-size: clamp(64px, 9vw, 120px);
   font-weight: 300; line-height: 0.9; letter-spacing: -0.02em;
 }
 .hero-name em { font-style: italic; color: var(--warm); }
+
 .hero-right {
   text-align: right; display: flex; flex-direction: column; gap: 8px; align-items: flex-end;
 }
@@ -98,24 +128,23 @@ nav {
   font-size: 17px; font-weight: 300; line-height: 1.6;
   color: rgba(240,235,224,0.65); max-width: 340px;
 }
+
 .scroll-line {
   width: 1px; height: 48px;
   background: linear-gradient(to bottom, var(--warm), transparent);
   animation: scrollPulse 2s ease infinite;
   margin: 28px auto 0;
+  position: relative; z-index: 2;
 }
 @keyframes scrollPulse { 0%,100%{opacity:0.3;} 50%{opacity:1;} }
 
-/* ── VIDEO SECTION ── */
+/* ── VIDEO CAROUSEL ── */
 #videos { background: #040404; }
 
 .video-section-header {
   padding: 80px 56px 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
+  display: flex; justify-content: space-between; align-items: flex-end;
 }
-
 .section-label {
   font-family: 'DM Mono', monospace;
   font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--warm);
@@ -124,155 +153,70 @@ nav {
 .section-label::after { content:''; display:block; width:60px; height:1px; background:var(--line); }
 
 .carousel-counter {
-  font-family: 'DM Mono', monospace;
-  font-size: 11px; letter-spacing: 0.15em; color: var(--dim);
+  font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.15em; color: var(--dim);
 }
 .carousel-counter span { color: var(--warm); }
 
-/* Main video display */
 .video-main {
-  position: relative;
-  width: 100%;
-  margin-top: 40px;
-  background: #000;
+  position: relative; width: 100%; margin-top: 40px; background: #000;
 }
-
 .video-main iframe {
-  width: 100%;
-  aspect-ratio: 16/9;
-  border: none;
-  display: block;
-}
-
-/* Gradient overlays — top and bottom so UI doesn't fight video */
-.video-main::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 80px;
-  background: linear-gradient(to bottom, rgba(4,4,4,0.6), transparent);
-  z-index: 2;
-  pointer-events: none;
+  width: 100%; aspect-ratio: 16/9; border: none; display: block;
 }
 .video-main::after {
   content: '';
-  position: absolute;
-  bottom: 0; left: 0; right: 0;
-  height: 120px;
+  position: absolute; bottom:0; left:0; right:0; height:120px;
   background: linear-gradient(to top, rgba(4,4,4,1), transparent);
-  z-index: 2;
-  pointer-events: none;
+  z-index: 2; pointer-events: none;
 }
 
-/* Arrow nav over video */
 .video-arrows {
-  position: absolute;
-  top: 50%; transform: translateY(-50%);
-  z-index: 10;
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  padding: 0 24px;
-  pointer-events: none;
+  position: absolute; top:50%; transform:translateY(-50%);
+  z-index:10; width:100%; display:flex; justify-content:space-between;
+  padding:0 24px; pointer-events:none;
 }
-
 .arrow-btn {
-  pointer-events: all;
-  width: 52px; height: 52px;
-  border: 1px solid rgba(240,235,224,0.2);
-  border-radius: 50%;
-  background: rgba(0,0,0,0.5);
-  backdrop-filter: blur(8px);
-  display: flex; align-items: center; justify-content: center;
-  cursor: pointer;
-  transition: all 0.3s;
-  color: rgba(240,235,224,0.6);
+  pointer-events:all; width:52px; height:52px;
+  border:1px solid rgba(240,235,224,0.2); border-radius:50%;
+  background:rgba(0,0,0,0.5); backdrop-filter:blur(8px);
+  display:flex; align-items:center; justify-content:center;
+  cursor:pointer; transition:all 0.3s; color:rgba(240,235,224,0.6);
 }
-.arrow-btn:hover { border-color: var(--warm); color: var(--warm); background: rgba(200,169,126,0.15); }
+.arrow-btn:hover { border-color:var(--warm); color:var(--warm); background:rgba(200,169,126,0.15); }
 .arrow-btn svg { width:18px; height:18px; fill:none; stroke:currentColor; stroke-width:1.5; stroke-linecap:round; stroke-linejoin:round; }
 
-/* Mute toggle */
 .mute-btn {
-  position: absolute;
-  bottom: 20px; right: 24px;
-  z-index: 10;
-  font-family: 'DM Mono', monospace;
-  font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase;
-  color: rgba(240,235,224,0.5);
-  background: rgba(0,0,0,0.6);
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(240,235,224,0.15);
-  border-radius: 100px;
-  padding: 8px 16px;
-  cursor: pointer;
-  transition: all 0.3s;
-  display: flex; align-items: center; gap: 8px;
+  position:absolute; bottom:20px; right:24px; z-index:10;
+  font-family:'DM Mono',monospace; font-size:9px; letter-spacing:0.2em; text-transform:uppercase;
+  color:rgba(240,235,224,0.5); background:rgba(0,0,0,0.6); backdrop-filter:blur(8px);
+  border:1px solid rgba(240,235,224,0.15); border-radius:100px; padding:8px 16px;
+  cursor:pointer; transition:all 0.3s; display:flex; align-items:center; gap:8px;
 }
-.mute-btn:hover { color: var(--warm); border-color: var(--warm); }
+.mute-btn:hover { color:var(--warm); border-color:var(--warm); }
 .mute-btn svg { width:12px; height:12px; fill:currentColor; }
 
-/* Thumbnail strip */
 .thumb-strip {
-  display: flex;
-  gap: 3px;
-  padding: 0 0 64px;
-  overflow-x: auto;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
+  display:flex; gap:3px; padding:0 0 64px;
+  overflow-x:auto; scrollbar-width:none; -ms-overflow-style:none;
 }
-.thumb-strip::-webkit-scrollbar { display: none; }
-
-.thumb {
-  flex: 0 0 calc(12.5% - 3px);
-  min-width: 120px;
-  position: relative;
-  cursor: pointer;
-  overflow: hidden;
-  background: #111;
-}
-
-.thumb img {
-  width: 100%; aspect-ratio: 16/9;
-  object-fit: cover;
-  display: block;
-  transition: filter 0.3s, transform 0.4s;
-  filter: brightness(0.4) grayscale(0.3);
-}
-
-.thumb.active img { filter: brightness(0.9); }
-.thumb:hover img { filter: brightness(0.7); transform: scale(1.03); }
-
-.thumb-bar {
-  position: absolute;
-  bottom: 0; left: 0;
-  height: 2px;
-  background: var(--warm);
-  width: 0%;
-  transition: width 0.15s linear;
-}
-.thumb.active .thumb-bar { width: 100%; }
-
-.thumb-num {
-  position: absolute;
-  top: 6px; left: 8px;
-  font-family: 'DM Mono', monospace;
-  font-size: 8px; letter-spacing: 0.15em;
-  color: rgba(240,235,224,0.5);
-}
-.thumb.active .thumb-num { color: var(--warm); }
+.thumb-strip::-webkit-scrollbar { display:none; }
+.thumb { flex:0 0 calc(12.5% - 3px); min-width:120px; position:relative; cursor:pointer; overflow:hidden; background:#111; }
+.thumb img { width:100%; aspect-ratio:16/9; object-fit:cover; display:block; transition:filter 0.3s,transform 0.4s; filter:brightness(0.4) grayscale(0.3); }
+.thumb.active img { filter:brightness(0.9); }
+.thumb:hover img { filter:brightness(0.7); transform:scale(1.03); }
+.thumb-bar { position:absolute; bottom:0; left:0; height:2px; background:var(--warm); width:0%; transition:width 0.15s linear; }
+.thumb.active .thumb-bar { width:100%; }
+.thumb-num { position:absolute; top:6px; left:8px; font-family:'DM Mono',monospace; font-size:8px; letter-spacing:0.15em; color:rgba(240,235,224,0.5); }
+.thumb.active .thumb-num { color:var(--warm); }
 
 /* ── WORK ── */
-#work { padding: 100px 56px; }
-
+#work { padding:100px 56px; }
 .work-label {
-  font-family: 'DM Mono', monospace;
-  font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase;
-  color: var(--warm); margin-bottom: 48px;
-  display: flex; align-items: center; gap: 20px;
+  font-family:'DM Mono',monospace; font-size:10px; letter-spacing:0.25em; text-transform:uppercase;
+  color:var(--warm); margin-bottom:48px; display:flex; align-items:center; gap:20px;
 }
 .work-label::after { content:''; flex:1; height:1px; background:var(--line); max-width:120px; }
-
-.work-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3px; }
+.work-grid { display:grid; grid-template-columns:1fr 1fr; gap:3px; }
 .work-item { position:relative; overflow:hidden; cursor:pointer; background:#111; }
 .work-item:first-child { aspect-ratio:4/3; }
 .work-item:nth-child(2) { grid-row:1/3; }
@@ -308,18 +252,19 @@ footer span { font-family:'DM Mono',monospace; font-size:9px; letter-spacing:0.1
 .reveal.visible { opacity:1; transform:translateY(0); }
 
 @media(max-width:768px){
-  nav{padding:20px 24px;}
-  .nav-links{display:none;}
-  .hero{padding:0 24px 56px;}
-  .hero-right{display:none;}
-  .video-section-header{padding:56px 24px 0;}
-  .thumb{min-width:90px;}
-  #work{padding:72px 24px;}
-  .work-grid{grid-template-columns:1fr;}
-  .work-item:nth-child(2){grid-row:auto;}
-  .work-item{aspect-ratio:16/9;}
-  #contact{grid-template-columns:1fr;padding:72px 24px;}
-  footer{padding:20px 24px;flex-direction:column;gap:8px;}
+  nav { padding:20px 24px; }
+  .nav-links { display:none; }
+  .hero { padding:0 24px 56px; }
+  .hero-right { display:none; }
+  .hero-video-wrap iframe { width:100vw; height:56.25vw; min-height:unset; top:50%; }
+  .video-section-header { padding:56px 24px 0; }
+  .thumb { min-width:90px; }
+  #work { padding:72px 24px; }
+  .work-grid { grid-template-columns:1fr; }
+  .work-item:nth-child(2) { grid-row:auto; }
+  .work-item { aspect-ratio:16/9; }
+  #contact { grid-template-columns:1fr; padding:72px 24px; }
+  footer { padding:20px 24px; flex-direction:column; gap:8px; }
 }
 </style>
 </head>
@@ -334,9 +279,25 @@ footer span { font-family:'DM Mono',monospace; font-size:9px; letter-spacing:0.1
   </ul>
 </nav>
 
+<!-- HERO — video background -->
 <section class="hero">
-  <div class="hero-bg" id="heroBg"></div>
-  <div class="hero-grad"></div>
+
+  <!-- Fallback image while video loads -->
+  <div class="hero-fallback" id="heroFallback"></div>
+
+  <!-- YouTube looping background video -->
+  <div class="hero-video-wrap">
+    <iframe
+      id="heroVideo"
+      src="https://www.youtube.com/embed/vwfkv6oNa10?autoplay=1&mute=1&loop=1&playlist=vwfkv6oNa10&controls=0&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3&disablekb=1&enablejsapi=1"
+      title="Hero background"
+      frameborder="0"
+      allow="autoplay; encrypted-media">
+    </iframe>
+  </div>
+
+  <div class="hero-overlay"></div>
+
   <div class="hero-content">
     <h1 class="hero-name">Philip<br><em>Lloyd</em></h1>
     <div class="hero-right">
@@ -347,7 +308,7 @@ footer span { font-family:'DM Mono',monospace; font-size:9px; letter-spacing:0.1
   <div class="scroll-line"></div>
 </section>
 
-<!-- VIDEO SECTION -->
+<!-- VIDEO CAROUSEL -->
 <section id="videos">
   <div class="video-section-header reveal">
     <div class="section-label">Film &amp; Campaign</div>
@@ -374,12 +335,11 @@ footer span { font-family:'DM Mono',monospace; font-size:9px; letter-spacing:0.1
     </div>
 
     <button class="mute-btn" id="muteBtn">
-      <svg id="muteIcon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M11 5L6 9H2v6h4l5 4V5zM23 9l-6 6M17 9l6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/></svg>
+      <svg id="muteIcon" viewBox="0 0 24 24"><path d="M11 5L6 9H2v6h4l5 4V5zM23 9l-6 6M17 9l6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/></svg>
       <span id="muteLabel">Muted</span>
     </button>
   </div>
 
-  <!-- Thumbnail strip -->
   <div class="thumb-strip" id="thumbStrip"></div>
 </section>
 
@@ -422,11 +382,10 @@ footer span { font-family:'DM Mono',monospace; font-size:9px; letter-spacing:0.1
 </footer>
 
 <script>
-// Hero bg
-const bg = document.getElementById('heroBg');
-const bgImg = new Image();
-bgImg.onload = () => bg.classList.add('loaded');
-bgImg.src = 'Lexus-August-2023-6-_Ocean.jpg';
+// Fade out fallback once video has had time to load
+setTimeout(() => {
+  document.getElementById('heroFallback').classList.add('hidden');
+}, 3000);
 
 // Scroll reveal
 const reveals = document.querySelectorAll('.reveal');
@@ -453,14 +412,14 @@ document.addEventListener('keydown', e => {
 
 // Videos
 const videos = [
-  { id: 'vwfkv6oNa10', thumb: `https://img.youtube.com/vi/vwfkv6oNa10/mqdefault.jpg` },
-  { id: '3FoGwuCYx4g', thumb: `https://img.youtube.com/vi/3FoGwuCYx4g/mqdefault.jpg` },
-  { id: 'a4OSVXWtliY', thumb: `https://img.youtube.com/vi/a4OSVXWtliY/mqdefault.jpg` },
-  { id: '0zOlhs-IXCs', thumb: `https://img.youtube.com/vi/0zOlhs-IXCs/mqdefault.jpg` },
-  { id: 'RloQycScUJU', thumb: `https://img.youtube.com/vi/RloQycScUJU/mqdefault.jpg` },
-  { id: 'QAxmcfkEMP4', thumb: `https://img.youtube.com/vi/QAxmcfkEMP4/mqdefault.jpg` },
-  { id: '-HvoasdgXYc', thumb: `https://img.youtube.com/vi/-HvoasdgXYc/mqdefault.jpg` },
-  { id: '7Nx8S4PLD5w', thumb: `https://img.youtube.com/vi/7Nx8S4PLD5w/mqdefault.jpg` },
+  { id: 'vwfkv6oNa10' },
+  { id: '3FoGwuCYx4g' },
+  { id: 'a4OSVXWtliY' },
+  { id: '0zOlhs-IXCs' },
+  { id: 'RloQycScUJU' },
+  { id: 'QAxmcfkEMP4' },
+  { id: '-HvoasdgXYc' },
+  { id: '7Nx8S4PLD5w' },
 ];
 
 let current = 0;
@@ -469,12 +428,11 @@ const iframe = document.getElementById('mainIframe');
 const counter = document.getElementById('currentSlide');
 const stripEl = document.getElementById('thumbStrip');
 
-// Build thumbnail strip
 videos.forEach((v, i) => {
   const t = document.createElement('div');
   t.className = 'thumb' + (i === 0 ? ' active' : '');
   t.innerHTML = `
-    <img src="${v.thumb}" alt="Video ${i+1}" loading="lazy">
+    <img src="https://img.youtube.com/vi/${v.id}/mqdefault.jpg" alt="Video ${i+1}" loading="lazy">
     <div class="thumb-bar"></div>
     <span class="thumb-num">0${i+1}</span>
   `;
@@ -489,9 +447,8 @@ function goTo(index) {
   iframe.src = `https://www.youtube.com/embed/${v.id}?autoplay=1&mute=${muteParam}&controls=1&modestbranding=1&rel=0&enablejsapi=1`;
   counter.textContent = current + 1;
   document.querySelectorAll('.thumb').forEach((t, i) => t.classList.toggle('active', i === current));
-  // scroll thumb into view
-  const activThumb = stripEl.children[current];
-  if(activThumb) activThumb.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+  const activeThumb = stripEl.children[current];
+  if(activeThumb) activeThumb.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
 }
 
 document.getElementById('prevBtn').addEventListener('click', () => goTo(current - 1));
@@ -505,13 +462,11 @@ const muteIcon = document.getElementById('muteIcon');
 muteBtn.addEventListener('click', () => {
   isMuted = !isMuted;
   muteLabel.textContent = isMuted ? 'Muted' : 'Sound on';
-  // Reload current video with new mute state
   muteIcon.innerHTML = isMuted
     ? `<path d="M11 5L6 9H2v6h4l5 4V5zM23 9l-6 6M17 9l6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/>`
     : `<path d="M11 5L6 9H2v6h4l5 4V5z" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/><path d="M15.54 8.46a5 5 0 010 7.07M19.07 4.93a10 10 0 010 14.14" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/>`;
   const v = videos[current];
-  const muteParam = isMuted ? '1' : '0';
-  iframe.src = `https://www.youtube.com/embed/${v.id}?autoplay=1&mute=${muteParam}&controls=1&modestbranding=1&rel=0&enablejsapi=1`;
+  iframe.src = `https://www.youtube.com/embed/${v.id}?autoplay=1&mute=${isMuted ? '1' : '0'}&controls=1&modestbranding=1&rel=0&enablejsapi=1`;
 });
 </script>
 </body>
