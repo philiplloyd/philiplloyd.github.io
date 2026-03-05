@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Philip Lloyd</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #080808;
+  --cream: #F0EBE0;
+  --warm: #C8A97E;
+  --dim: #555;
+  --line: rgba(255,255,255,0.08);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--cream);
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  overflow-x: hidden;
+}
+
+/* NAV */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 99;
+  padding: 28px 56px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(to bottom, rgba(8,8,8,0.95), transparent);
+}
+
+.nav-logo {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--warm);
+}
+
+.nav-links {
+  display: flex;
+  gap: 40px;
+  list-style: none;
+}
+
+.nav-links a {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: rgba(240,235,224,0.45);
+  transition: color 0.3s;
+}
+
+.nav-links a:hover { color: var(--cream); }
+
+/* HERO */
+.hero {
+  height: 100vh;
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  padding: 0 56px 72px;
+  overflow: hidden;
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background-image: url('Lexus-August-2023-6-_Ocean.jpg');
+  background-size: cover;
+  background-position: center;
+  filter: brightness(0.45);
+  transform: scale(1.04);
+  transition: transform 8s ease;
+}
+
+.hero-bg.loaded { transform: scale(1); }
+
+.hero-grad {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(8,8,8,0.92) 0%, rgba(8,8,8,0.2) 50%, transparent 100%);
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  width: 100%;
+}
+
+.hero-name {
+  font-size: clamp(64px, 9vw, 120px);
+  font-weight: 300;
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+}
+
+.hero-name em {
+  font-style: italic;
+  color: var(--warm);
+}
+
+.hero-right {
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-end;
+}
+
+.hero-role {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--warm);
+}
+
+.hero-desc {
+  font-size: 17px;
+  font-weight: 300;
+  line-height: 1.6;
+  color: rgba(240,235,224,0.65);
+  max-width: 340px;
+}
+
+.scroll-hint {
+  position: absolute;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.scroll-line {
+  width: 1px;
+  height: 48px;
+  background: linear-gradient(to bottom, var(--warm), transparent);
+  animation: scrollPulse 2s ease infinite;
+}
+
+@keyframes scrollPulse {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
+}
+
+/* SECTION COMMON */
+section {
+  padding: 100px 56px;
+}
+
+.section-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--warm);
+  margin-bottom: 56px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.section-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--line);
+  max-width: 120px;
+}
+
+/* WORK / IMAGE GRID */
+.work-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto;
+  gap: 3px;
+}
+
+.work-item {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  background: #111;
+}
+
+.work-item:first-child {
+  grid-column: 1 / 2;
+  grid-row: 1 / 2;
+  aspect-ratio: 4/3;
+}
+
+.work-item:nth-child(2) {
+  grid-column: 2 / 3;
+  grid-row: 1 / 3;
+  aspect-ratio: unset;
+}
+
+.work-item:nth-child(3) {
+  grid-column: 1 / 2;
+  grid-row: 2 / 3;
+  aspect-ratio: 4/3;
+}
+
+.work-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.7s cubic-bezier(0.22,1,0.36,1), filter 0.5s;
+  filter: brightness(0.85);
+  display: block;
+}
+
+.work-item:hover img {
+  transform: scale(1.04);
+  filter: brightness(1);
+}
+
+.work-caption {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  padding: 28px 28px 24px;
+  background: linear-gradient(to top, rgba(0,0,0,0.85), transparent);
+  transform: translateY(8px);
+  opacity: 0;
+  transition: all 0.4s;
+}
+
+.work-item:hover .work-caption {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.work-caption-title {
+  font-size: 18px;
+  font-weight: 300;
+  color: var(--cream);
+  margin-bottom: 4px;
+}
+
+.work-caption-sub {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--warm);
+}
+
+/* LIGHTBOX */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.95);
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s;
+}
+
+.lightbox.open {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.lightbox img {
+  max-width: 90vw;
+  max-height: 88vh;
+  object-fit: contain;
+}
+
+.lightbox-close {
+  position: absolute;
+  top: 28px; right: 36px;
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  color: var(--dim);
+  cursor: pointer;
+  text-transform: uppercase;
+  transition: color 0.3s;
+}
+
+.lightbox-close:hover { color: var(--cream); }
+
+/* VIDEO SECTION */
+#videos { background: #050505; }
+
+.video-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 3px;
+}
+
+.video-item {
+  position: relative;
+  background: #111;
+  overflow: hidden;
+}
+
+.video-thumb {
+  width: 100%;
+  aspect-ratio: 16/9;
+  border: none;
+  display: block;
+}
+
+.video-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.3);
+  opacity: 1;
+  transition: opacity 0.4s;
+  pointer-events: none;
+}
+
+.video-item.playing .video-overlay { opacity: 0; }
+
+.play-btn {
+  width: 56px;
+  height: 56px;
+  border: 1.5px solid rgba(240,235,224,0.6);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s;
+}
+
+.play-btn svg {
+  width: 18px;
+  height: 18px;
+  fill: rgba(240,235,224,0.8);
+  margin-left: 3px;
+}
+
+.video-item:hover .play-btn {
+  border-color: var(--warm);
+  background: rgba(200,169,126,0.15);
+}
+
+.video-item:hover .play-btn svg { fill: var(--warm); }
+
+/* CONTACT */
+#contact {
+  border-top: 1px solid var(--line);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+  padding: 120px 56px;
+}
+
+.contact-heading {
+  font-size: clamp(48px, 5vw, 72px);
+  font-weight: 300;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+
+.contact-heading em { font-style: italic; color: var(--warm); }
+
+.contact-links {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.contact-row { display: flex; flex-direction: column; gap: 4px; }
+
+.contact-lbl {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+
+.contact-val {
+  font-size: 20px;
+  font-weight: 300;
+  color: var(--cream);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.contact-val:hover { color: var(--warm); }
+
+/* FOOTER */
+footer {
+  padding: 24px 56px;
+  border-top: 1px solid var(--line);
+  display: flex;
+  justify-content: space-between;
+}
+
+footer span {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+
+/* FADE IN ON SCROLL */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.8s cubic-bezier(0.22,1,0.36,1), transform 0.8s cubic-bezier(0.22,1,0.36,1);
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (max-width: 768px) {
+  nav { padding: 20px 24px; }
+  .nav-links { display: none; }
+  .hero { padding: 0 24px 56px; }
+  .hero-right { display: none; }
+  section { padding: 72px 24px; }
+  .work-grid { grid-template-columns: 1fr; }
+  .work-item:first-child,
+  .work-item:nth-child(2),
+  .work-item:nth-child(3) {
+    grid-column: 1; grid-row: auto; aspect-ratio: 16/9;
+  }
+  .video-grid { grid-template-columns: 1fr; }
+  #contact { grid-template-columns: 1fr; padding: 72px 24px; }
+  footer { padding: 20px 24px; flex-direction: column; gap: 8px; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Philip Lloyd</div>
+  <ul class="nav-links">
+    <li><a href="#work">Work</a></li>
+    <li><a href="#videos">Film</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg" id="heroBg"></div>
+  <div class="hero-grad"></div>
+  <div class="hero-content">
+    <h1 class="hero-name">Philip<br><em>Lloyd</em></h1>
+    <div class="hero-right">
+      <span class="hero-role">Account Director · London</span>
+      <p class="hero-desc">6+ years delivering entertainment-led campaigns across film, TV, cinema and experiential.</p>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- WORK -->
+<section id="work">
+  <div class="section-label reveal">Selected Work</div>
+  <div class="work-grid reveal">
+
+    <div class="work-item" onclick="openLightbox('Lexus-August-2023-4-_Ocean.jpg')">
+      <img src="Lexus-August-2023-4-_Ocean.jpg" alt="Lexus RZ — BFI IMAX Takeover, dusk" loading="lazy">
+      <div class="work-caption">
+        <div class="work-caption-title">Lexus RZ — BFI IMAX</div>
+        <div class="work-caption-sub">OOH · August 2023</div>
+      </div>
+    </div>
+
+    <div class="work-item" onclick="openLightbox('Lexus-August-2023-6-_Ocean.jpg')">
+      <img src="Lexus-August-2023-6-_Ocean.jpg" alt="Lexus RZ — BFI IMAX Takeover, night" loading="lazy">
+      <div class="work-caption">
+        <div class="work-caption-title">Lexus RZ — BFI IMAX Night</div>
+        <div class="work-caption-sub">OOH · August 2023</div>
+      </div>
+    </div>
+
+    <div class="work-item" onclick="openLightbox('Lexus-June-2024-3-_Ocean.jpg')">
+      <img src="Lexus-June-2024-3-_Ocean.jpg" alt="Lexus LBX — Ocean OOH" loading="lazy">
+      <div class="work-caption">
+        <div class="work-caption-title">Lexus LBX — Oxford Street</div>
+        <div class="work-caption-sub">OOH · June 2024</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <span class="lightbox-close">Close ✕</span>
+  <img id="lightboxImg" src="" alt="">
+</div>
+
+<!-- VIDEOS -->
+<section id="videos">
+  <div class="section-label reveal">Film & Campaign</div>
+  <div class="video-grid reveal">
+
+    <div class="video-item" id="vi0">
+      <iframe class="video-thumb" src="https://www.youtube.com/embed/vwfkv6oNa10?enablejsapi=1" title="Campaign film" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      <div class="video-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div>
+    </div>
+
+    <div class="video-item" id="vi1">
+      <iframe class="video-thumb" src="https://www.youtube.com/embed/3FoGwuCYx4g?enablejsapi=1" title="Campaign film" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      <div class="video-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div>
+    </div>
+
+    <div class="video-item" id="vi2">
+      <iframe class="video-thumb" src="https://www.youtube.com/embed/a4OSVXWtliY?enablejsapi=1" title="Campaign film" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      <div class="video-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div>
+    </div>
+
+    <div class="video-item" id="vi3">
+      <iframe class="video-thumb" src="https://www.youtube.com/embed/0zOlhs-IXCs?enablejsapi=1" title="Campaign film" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      <div class="video-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div>
+    </div>
+
+    <div class="video-item" id="vi4">
+      <iframe class="video-thumb" src="https://www.youtube.com/embed/RloQycScUJU?enablejsapi=1" title="Campaign film" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      <div class="video-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div>
+    </div>
+
+    <div class="video-item" id="vi5">
+      <iframe class="video-thumb" src="https://www.youtube.com/embed/QAxmcfkEMP4?enablejsapi=1" title="Campaign film" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      <div class="video-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div>
+    </div>
+
+    <div class="video-item" id="vi6">
+      <iframe class="video-thumb" src="https://www.youtube.com/embed/-HvoasdgXYc?enablejsapi=1" title="Campaign film" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      <div class="video-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div>
+    </div>
+
+    <div class="video-item" id="vi7">
+      <iframe class="video-thumb" src="https://www.youtube.com/embed/7Nx8S4PLD5w?enablejsapi=1" title="Campaign film" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      <div class="video-overlay"><div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <h2 class="contact-heading reveal">Get in<br><em>touch.</em></h2>
+  <div class="contact-links reveal">
+    <div class="contact-row">
+      <span class="contact-lbl">Email</span>
+      <a class="contact-val" href="mailto:lloydphil45@gmail.com">lloydphil45@gmail.com</a>
+    </div>
+    <div class="contact-row">
+      <span class="contact-lbl">Mobile</span>
+      <a class="contact-val" href="tel:+447425153740">+44 7425 153740</a>
+    </div>
+    <div class="contact-row">
+      <span class="contact-lbl">LinkedIn</span>
+      <a class="contact-val" href="https://linkedin.com/in/philip-lloydd" target="_blank">philip-lloydd</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>© 2026 Philip Lloyd</span>
+  <span>Account Director · London</span>
+</footer>
+
+<script>
+  // Hero bg load
+  const bg = document.getElementById('heroBg');
+  const img = new Image();
+  img.onload = () => bg.classList.add('loaded');
+  img.src = 'Lexus-August-2023-6-_Ocean.jpg';
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+  }, { threshold: 0.1 });
+  reveals.forEach(r => observer.observe(r));
+
+  // Lightbox
+  function openLightbox(src) {
+    document.getElementById('lightboxImg').src = src;
+    document.getElementById('lightbox').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+
+  // Video overlay hide on click
+  document.querySelectorAll('.video-item').forEach(item => {
+    item.querySelector('.video-overlay').addEventListener('click', () => {
+      item.classList.add('playing');
+    });
+  });
+</script>
+</body>
+</html>
