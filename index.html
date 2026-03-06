@@ -17,11 +17,9 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 99; padding: 28px 56p
 .nav-links a { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; text-decoration: none; color: rgba(240,235,224,0.45); transition: color 0.3s; }
 .nav-links a:hover { color: var(--cream); }
 
-/* HERO */
 .hero { height: 100vh; position: relative; overflow: hidden; display: flex; flex-direction: column; justify-content: flex-end; }
 .hero-video-wrap { position: absolute; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
 .hero-video-wrap iframe { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 177.78vh; height: 100vh; min-width: 100vw; min-height: 56.25vw; }
-
 .hero-overlay { position: absolute; inset: 0; z-index: 2; background: linear-gradient(to top, rgba(8,8,8,0.97) 0%, rgba(8,8,8,0.6) 35%, rgba(8,8,8,0.35) 65%, rgba(8,8,8,0.2) 100%); transition: opacity 0.6s ease; }
 .hero-overlay.light { opacity: 0.4; }
 .hero-title { position: absolute; bottom: 220px; left: 56px; right: 56px; z-index: 5; display: flex; justify-content: space-between; align-items: flex-end; }
@@ -45,7 +43,6 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 99; padding: 28px 56p
 .scroll-line { width: 1px; height: 40px; background: linear-gradient(to bottom, rgba(200,169,126,0.6), transparent); animation: scrollPulse 2s ease infinite; }
 @keyframes scrollPulse { 0%,100%{opacity:0.3;} 50%{opacity:1;} }
 
-/* Thumbnail strip */
 .hero-thumbs { position: relative; z-index: 6; display: flex; gap: 3px; background: rgba(8,8,8,0.6); backdrop-filter: blur(12px); border-top: 1px solid var(--line); overflow-x: auto; scrollbar-width: none; -ms-overflow-style: none; flex-shrink: 0; }
 .hero-thumbs::-webkit-scrollbar { display: none; }
 .thumb { flex: 0 0 12.5%; min-width: 100px; position: relative; cursor: pointer; overflow: hidden; background: #111; }
@@ -57,7 +54,6 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 99; padding: 28px 56p
 .thumb-num { position: absolute; top: 5px; left: 7px; font-family: 'DM Mono', monospace; font-size: 8px; letter-spacing: 0.12em; color: rgba(240,235,224,0.4); }
 .thumb.active .thumb-num { color: var(--warm); }
 
-/* WORK */
 #work { padding: 100px 56px; }
 .work-label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--warm); margin-bottom: 48px; display: flex; align-items: center; gap: 20px; }
 .work-label::after { content:''; flex:1; height:1px; background:var(--line); max-width:120px; }
@@ -65,18 +61,23 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 99; padding: 28px 56p
 .work-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: 320px 260px 320px 220px;
+  grid-template-rows: 300px 260px 300px 200px 300px 260px;
   gap: 3px;
 }
 .work-item { position: relative; overflow: hidden; cursor: pointer; background: #111; }
-.work-item:nth-child(1) { grid-column: 1 / 3; grid-row: 1; }
-.work-item:nth-child(2) { grid-column: 3 / 4; grid-row: 1; }
-.work-item:nth-child(3) { grid-column: 1;     grid-row: 2; }
-.work-item:nth-child(4) { grid-column: 2;     grid-row: 2; }
-.work-item:nth-child(5) { grid-column: 3;     grid-row: 2; }
-.work-item:nth-child(6) { grid-column: 1 / 3; grid-row: 3; }
-.work-item:nth-child(7) { grid-column: 3 / 4; grid-row: 3; }
-.work-item:nth-child(8) { grid-column: 1 / 4; grid-row: 4; }
+.work-item:nth-child(1)  { grid-column: 1 / 3; grid-row: 1; }
+.work-item:nth-child(2)  { grid-column: 3 / 4; grid-row: 1; }
+.work-item:nth-child(3)  { grid-column: 1;     grid-row: 2; }
+.work-item:nth-child(4)  { grid-column: 2;     grid-row: 2; }
+.work-item:nth-child(5)  { grid-column: 3;     grid-row: 2; }
+.work-item:nth-child(6)  { grid-column: 1 / 3; grid-row: 3; }
+.work-item:nth-child(7)  { grid-column: 3 / 4; grid-row: 3; }
+.work-item:nth-child(8)  { grid-column: 1 / 4; grid-row: 4; }
+.work-item:nth-child(9)  { grid-column: 1 / 3; grid-row: 5; }
+.work-item:nth-child(10) { grid-column: 3 / 4; grid-row: 5; }
+.work-item:nth-child(11) { grid-column: 1;     grid-row: 6; }
+.work-item:nth-child(12) { grid-column: 2;     grid-row: 6; }
+.work-item:nth-child(13) { grid-column: 3;     grid-row: 6; }
 .work-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.7s cubic-bezier(0.22,1,0.36,1), filter 0.5s; filter: brightness(0.82); display: block; }
 .work-item:hover img { transform: scale(1.04); filter: brightness(1); }
 .work-caption { position: absolute; bottom: 0; left: 0; right: 0; padding: 24px 24px 20px; background: linear-gradient(to top, rgba(0,0,0,0.88), transparent); transform: translateY(8px); opacity: 0; transition: all 0.4s; }
@@ -84,14 +85,12 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 99; padding: 28px 56p
 .work-caption-title { font-size: 17px; font-weight: 300; color: var(--cream); margin-bottom: 4px; }
 .work-caption-sub { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--warm); }
 
-/* LIGHTBOX */
 .lightbox { position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 200; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.4s; }
 .lightbox.open { opacity: 1; pointer-events: all; }
 .lightbox img { max-width: 90vw; max-height: 88vh; object-fit: contain; }
 .lightbox-close { position: absolute; top: 28px; right: 36px; font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.2em; color: var(--dim); cursor: pointer; text-transform: uppercase; transition: color 0.3s; }
 .lightbox-close:hover { color: var(--cream); }
 
-/* CONTACT */
 #contact { border-top: 1px solid var(--line); display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; padding: 120px 56px; }
 .contact-heading { font-size: clamp(48px,5vw,72px); font-weight: 300; line-height: 1.05; letter-spacing: -0.02em; }
 .contact-heading em { font-style: italic; color: var(--warm); }
@@ -113,7 +112,7 @@ footer span { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing:
   .hero-counter { right: 24px; } .hero-mute { right: 24px; bottom: 150px; } .hero-progress { bottom: 128px; }
   .thumb { min-width: 80px; }
   #work { padding: 72px 24px; }
-  .work-grid { grid-template-columns: 1fr; grid-template-rows: none; }
+  .work-grid { grid-template-columns: 1fr; grid-template-rows: none !important; }
   .work-item { grid-column: 1 !important; grid-row: auto !important; aspect-ratio: 16/9; }
   #contact { grid-template-columns: 1fr; padding: 72px 24px; }
   footer { padding: 20px 24px; flex-direction: column; gap: 8px; }
@@ -161,6 +160,7 @@ footer span { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing:
 <section id="work">
   <div class="work-label reveal">Selected Work</div>
   <div class="work-grid reveal">
+
     <div class="work-item" onclick="openLightbox('Lexus-August-2023-4-_Ocean.jpg')">
       <img src="Lexus-August-2023-4-_Ocean.jpg" alt="Lexus RZ BFI IMAX dusk" loading="lazy">
       <div class="work-caption"><div class="work-caption-title">Lexus RZ — BFI IMAX</div><div class="work-caption-sub">OOH · London · Aug 2023</div></div>
@@ -189,10 +189,31 @@ footer span { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing:
       <img src="Paralympic_Ad_Pause_I_Big_screen_I_version_2.jpg" alt="Toyota Paralympics GB 2" loading="lazy">
       <div class="work-caption"><div class="work-caption-title">Toyota — Paralympics GB</div><div class="work-caption-sub">TV Sponsorship · Channel 4 · 2024</div></div>
     </div>
+    <div class="work-item" onclick="openLightbox('Corolla_2025_KV.png')">
+      <img src="Corolla_2025_KV.png" alt="Toyota Corolla 2025 Key Visual" loading="lazy">
+      <div class="work-caption"><div class="work-caption-title">Toyota Corolla 2025 — Key Visual</div><div class="work-caption-sub">Campaign · 2025</div></div>
+    </div>
+    <div class="work-item" onclick="openLightbox('still5.png')">
+      <img src="still5.png" alt="Toyota Corolla 2025 — Race track" loading="lazy">
+      <div class="work-caption"><div class="work-caption-title">Toyota Corolla 2025 — Race Track</div><div class="work-caption-sub">Campaign Still · 2025</div></div>
+    </div>
+    <div class="work-item" onclick="openLightbox('still4.png')">
+      <img src="still4.png" alt="Toyota Corolla 2025 — Fisherman" loading="lazy">
+      <div class="work-caption"><div class="work-caption-title">Toyota Corolla 2025 — Fisherman</div><div class="work-caption-sub">Campaign Still · 2025</div></div>
+    </div>
+    <div class="work-item" onclick="openLightbox('still1.png')">
+      <img src="still1.png" alt="Toyota Corolla 2025 — Fish costume" loading="lazy">
+      <div class="work-caption"><div class="work-caption-title">Toyota Corolla 2025</div><div class="work-caption-sub">Campaign Still · 2025</div></div>
+    </div>
+    <div class="work-item" onclick="openLightbox('still2.png')">
+      <img src="still2.png" alt="Toyota Corolla 2025 — Ambulance" loading="lazy">
+      <div class="work-caption"><div class="work-caption-title">Toyota Corolla 2025</div><div class="work-caption-sub">Campaign Still · 2025</div></div>
+    </div>
     <div class="work-item" onclick="openLightbox('Paralympic_Ad_Pause_I_Big_screen_I_version_1.jpg')">
       <img src="Paralympic_Ad_Pause_I_Big_screen_I_version_1.jpg" alt="Toyota Paralympics GB 3" loading="lazy">
       <div class="work-caption"><div class="work-caption-title">Toyota — Paralympics GB</div><div class="work-caption-sub">TV Sponsorship · Channel 4 · 2024</div></div>
     </div>
+
   </div>
 </section>
 
@@ -217,25 +238,12 @@ footer span { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing:
 
 <script src="https://www.youtube.com/iframe_api"></script>
 <script>
-const videoIds = [
-  '3FoGwuCYx4g',
-  'a4OSVXWtliY',
-  '0zOlhs-IXCs',
-  '-HvoasdgXYc',
-  'RloQycScUJU',
-  'QAxmcfkEMP4',
-  'vwfkv6oNa10',
-  '7Nx8S4PLD5w',
-];
+var videoIds = ['3FoGwuCYx4g','a4OSVXWtliY','0zOlhs-IXCs','-HvoasdgXYc','RloQycScUJU','QAxmcfkEMP4','vwfkv6oNa10','7Nx8S4PLD5w'];
+var current = 0, isMuted = true, player = null, overlayFadeTimer = null;
 
-let current = 0;
-let isMuted = true;
-let player = null;
-let overlayFadeTimer = null;
-
-const thumbsEl = document.getElementById('heroThumbs');
-videoIds.forEach((id, i) => {
-  const t = document.createElement('div');
+var thumbsEl = document.getElementById('heroThumbs');
+videoIds.forEach(function(id, i) {
+  var t = document.createElement('div');
   t.className = 'thumb' + (i === 0 ? ' active' : '');
   t.innerHTML = '<img src="https://img.youtube.com/vi/' + id + '/mqdefault.jpg" alt="Video ' + (i+1) + '" loading="lazy"><div class="thumb-active-bar"></div><span class="thumb-num">0' + (i+1) + '</span>';
   t.addEventListener('click', function() { goTo(i); });
@@ -249,9 +257,7 @@ window.onYouTubeIframeAPIReady = function() {
     events: {
       onReady: function(e) { e.target.playVideo(); },
       onStateChange: function(e) {
-        if (e.data === YT.PlayerState.PLAYING) {
-          startProgressBar();
-}
+        if (e.data === YT.PlayerState.PLAYING) startProgressBar();
         if (e.data === YT.PlayerState.ENDED) goTo(current + 1);
         if (e.data === YT.PlayerState.PAUSED) stopProgressBar();
       }
@@ -267,22 +273,22 @@ function goTo(index) {
   }
   document.getElementById('heroCurrentNum').textContent = current + 1;
   document.querySelectorAll('.thumb').forEach(function(t, i) { t.classList.toggle('active', i === current); });
-  var activeThumb = thumbsEl.children[current];
-  if (activeThumb) activeThumb.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+  var at = thumbsEl.children[current];
+  if (at) at.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
   stopProgressBar();
 }
 
 function startProgressBar() {
   stopProgressBar();
   if (!player || !player.getDuration) return;
-  var duration = player.getDuration();
-  if (!duration) return;
+  var dur = player.getDuration();
+  if (!dur) return;
   var bar = document.getElementById('heroProgressBar');
   bar.style.transition = 'none';
   bar.style.width = '0%';
   bar.offsetWidth;
   bar.classList.add('running');
-  bar.style.transitionDuration = duration + 's';
+  bar.style.transitionDuration = dur + 's';
   bar.style.width = '100%';
 }
 
@@ -294,15 +300,14 @@ function stopProgressBar() {
 }
 
 function triggerOverlayFade() {
-  var overlay = document.getElementById('heroOverlay');
-  overlay.classList.add('light');
+  var o = document.getElementById('heroOverlay');
+  o.classList.add('light');
   clearTimeout(overlayFadeTimer);
-  overlayFadeTimer = setTimeout(function() { overlay.classList.remove('light'); }, 2000);
+  overlayFadeTimer = setTimeout(function() { o.classList.remove('light'); }, 2000);
 }
 
 document.getElementById('heroPrev').addEventListener('click', function() { triggerOverlayFade(); goTo(current - 1); });
 document.getElementById('heroNext').addEventListener('click', function() { triggerOverlayFade(); goTo(current + 1); });
-
 document.addEventListener('keydown', function(e) {
   if (e.key === 'ArrowLeft') { triggerOverlayFade(); goTo(current - 1); }
   if (e.key === 'ArrowRight') { triggerOverlayFade(); goTo(current + 1); }
@@ -312,9 +317,9 @@ document.addEventListener('keydown', function(e) {
 document.getElementById('heroMute').addEventListener('click', function() {
   isMuted = !isMuted;
   document.getElementById('heroMuteLabel').textContent = isMuted ? 'Muted' : 'Sound on';
-  var iconMuted = '<path d="M11 5L6 9H2v6h4l5 4V5zM23 9l-6 6M17 9l6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/>';
-  var iconOn = '<path d="M11 5L6 9H2v6h4l5 4V5z" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/><path d="M15.54 8.46a5 5 0 010 7.07M19.07 4.93a10 10 0 010 14.14" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/>';
-  document.getElementById('heroMuteIcon').innerHTML = isMuted ? iconMuted : iconOn;
+  document.getElementById('heroMuteIcon').innerHTML = isMuted
+    ? '<path d="M11 5L6 9H2v6h4l5 4V5zM23 9l-6 6M17 9l6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/>'
+    : '<path d="M11 5L6 9H2v6h4l5 4V5z" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/><path d="M15.54 8.46a5 5 0 010 7.07M19.07 4.93a10 10 0 010 14.14" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/>';
   if (player) { if (isMuted) player.mute(); else player.unMute(); }
 });
 
