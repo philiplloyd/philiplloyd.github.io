@@ -7,156 +7,49 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-:root {
-  --bg: #080808;
-  --cream: #F0EBE0;
-  --warm: #C8A97E;
-  --dim: #555;
-  --line: rgba(255,255,255,0.08);
-}
-
+:root { --bg: #080808; --cream: #F0EBE0; --warm: #C8A97E; --dim: #555; --line: rgba(255,255,255,0.08); }
 html { scroll-behavior: smooth; }
+body { background: var(--bg); color: var(--cream); font-family: 'Cormorant Garamond', Georgia, serif; overflow-x: hidden; }
 
-body {
-  background: var(--bg);
-  color: var(--cream);
-  font-family: 'Cormorant Garamond', Georgia, serif;
-  overflow-x: hidden;
-}
-
-nav {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 99;
-  padding: 28px 56px;
-  display: flex; justify-content: space-between; align-items: center;
-  background: linear-gradient(to bottom, rgba(8,8,8,0.9), transparent);
-}
+nav { position: fixed; top: 0; left: 0; right: 0; z-index: 99; padding: 28px 56px; display: flex; justify-content: space-between; align-items: center; background: linear-gradient(to bottom, rgba(8,8,8,0.9), transparent); }
 .nav-logo { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--warm); }
 .nav-links { display: flex; gap: 40px; list-style: none; }
 .nav-links a { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; text-decoration: none; color: rgba(240,235,224,0.45); transition: color 0.3s; }
 .nav-links a:hover { color: var(--cream); }
 
-/* ── HERO ── */
-.hero {
-  height: 100vh;
-  position: relative;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-}
-
-.hero-video-wrap {
-  position: absolute; inset: 0; z-index: 0; pointer-events: none; overflow: hidden;
-}
-.hero-video-wrap iframe {
-  position: absolute; top: 50%; left: 50%;
-  transform: translate(-50%, -50%);
-  width: 177.78vh; height: 100vh;
-  min-width: 100vw; min-height: 56.25vw;
-}
-
-.hero-fallback {
-  position: absolute; inset: 0; z-index: 1;
-  background-image: url('Lexus-August-2023-6-_Ocean.jpg');
-  background-size: cover; background-position: center;
-  filter: brightness(0.5);
-  transition: opacity 1.5s ease;
-}
+/* HERO */
+.hero { height: 100vh; position: relative; overflow: hidden; display: flex; flex-direction: column; justify-content: flex-end; }
+.hero-video-wrap { position: absolute; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+.hero-video-wrap iframe { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 177.78vh; height: 100vh; min-width: 100vw; min-height: 56.25vw; }
+.hero-fallback { position: absolute; inset: 0; z-index: 1; background-image: url('Lexus-August-2023-6-_Ocean.jpg'); background-size: cover; background-position: center; filter: brightness(0.5); transition: opacity 1.5s ease; }
 .hero-fallback.hidden { opacity: 0; pointer-events: none; }
-
-.hero-overlay {
-  position: absolute; inset: 0; z-index: 2;
-  background: linear-gradient(to top,
-    rgba(8,8,8,0.97) 0%,
-    rgba(8,8,8,0.6) 35%,
-    rgba(8,8,8,0.35) 65%,
-    rgba(8,8,8,0.2) 100%
-  );
-  transition: opacity 0.6s ease;
-}
+.hero-overlay { position: absolute; inset: 0; z-index: 2; background: linear-gradient(to top, rgba(8,8,8,0.97) 0%, rgba(8,8,8,0.6) 35%, rgba(8,8,8,0.35) 65%, rgba(8,8,8,0.2) 100%); transition: opacity 0.6s ease; }
 .hero-overlay.light { opacity: 0.4; }
-
-.hero-title {
-  position: absolute;
-  bottom: 220px; left: 56px; right: 56px;
-  z-index: 5;
-  display: flex; justify-content: space-between; align-items: flex-end;
-}
+.hero-title { position: absolute; bottom: 220px; left: 56px; right: 56px; z-index: 5; display: flex; justify-content: space-between; align-items: flex-end; }
 .hero-name { font-size: clamp(64px, 9vw, 120px); font-weight: 300; line-height: 0.9; letter-spacing: -0.02em; }
 .hero-name em { font-style: italic; color: var(--warm); }
 .hero-right { text-align: right; display: flex; flex-direction: column; gap: 8px; align-items: flex-end; }
 .hero-role { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--warm); }
 .hero-desc { font-size: 17px; font-weight: 300; line-height: 1.6; color: rgba(240,235,224,0.65); max-width: 340px; }
-
-.hero-arrows {
-  position: absolute; top: 0; bottom: 0; left: 0; right: 0;
-  z-index: 6; pointer-events: none;
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 0 24px;
-}
-.hero-arrow {
-  pointer-events: all;
-  width: 56px; height: 56px;
-  border: 1px solid rgba(240,235,224,0.25); border-radius: 50%;
-  background: rgba(8,8,8,0.45); backdrop-filter: blur(10px);
-  display: flex; align-items: center; justify-content: center;
-  cursor: pointer; transition: all 0.3s; color: rgba(240,235,224,0.7);
-}
+.hero-arrows { position: absolute; top: 0; bottom: 0; left: 0; right: 0; z-index: 6; pointer-events: none; display: flex; align-items: center; justify-content: space-between; padding: 0 24px; }
+.hero-arrow { pointer-events: all; width: 56px; height: 56px; border: 1px solid rgba(240,235,224,0.25); border-radius: 50%; background: rgba(8,8,8,0.45); backdrop-filter: blur(10px); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s; color: rgba(240,235,224,0.7); }
 .hero-arrow:hover { border-color: var(--warm); color: var(--warm); background: rgba(200,169,126,0.15); }
 .hero-arrow svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
-
-.hero-counter {
-  position: absolute; top: 90px; right: 56px; z-index: 6;
-  font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.15em; color: rgba(240,235,224,0.4);
-}
+.hero-counter { position: absolute; top: 90px; right: 56px; z-index: 6; font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.15em; color: rgba(240,235,224,0.4); }
 .hero-counter span { color: var(--warm); }
-
-.hero-mute {
-  position: absolute; bottom: 180px; right: 56px; z-index: 6;
-  font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase;
-  color: rgba(240,235,224,0.45); background: rgba(0,0,0,0.5); backdrop-filter: blur(8px);
-  border: 1px solid rgba(240,235,224,0.12); border-radius: 100px; padding: 8px 16px;
-  cursor: pointer; transition: all 0.3s; display: flex; align-items: center; gap: 8px;
-}
+.hero-mute { position: absolute; bottom: 180px; right: 56px; z-index: 6; font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(240,235,224,0.45); background: rgba(0,0,0,0.5); backdrop-filter: blur(8px); border: 1px solid rgba(240,235,224,0.12); border-radius: 100px; padding: 8px 16px; cursor: pointer; transition: all 0.3s; display: flex; align-items: center; gap: 8px; }
 .hero-mute:hover { color: var(--warm); border-color: var(--warm); }
-
-.hero-progress {
-  position: absolute; bottom: 155px; left: 0; right: 0; z-index: 6;
-  height: 1px; background: rgba(255,255,255,0.08);
-}
-.hero-progress-bar {
-  height: 100%; background: var(--warm);
-  width: 0%; transition: none;
-}
+.hero-progress { position: absolute; bottom: 155px; left: 0; right: 0; z-index: 6; height: 1px; background: rgba(255,255,255,0.08); }
+.hero-progress-bar { height: 100%; background: var(--warm); width: 0%; transition: none; }
 .hero-progress-bar.running { transition: width linear; }
-
-.scroll-hint {
-  position: absolute; bottom: 72px; left: 50%; transform: translateX(-50%);
-  z-index: 6;
-}
-.scroll-line {
-  width: 1px; height: 40px;
-  background: linear-gradient(to bottom, rgba(200,169,126,0.6), transparent);
-  animation: scrollPulse 2s ease infinite;
-}
+.scroll-hint { position: absolute; bottom: 72px; left: 50%; transform: translateX(-50%); z-index: 6; }
+.scroll-line { width: 1px; height: 40px; background: linear-gradient(to bottom, rgba(200,169,126,0.6), transparent); animation: scrollPulse 2s ease infinite; }
 @keyframes scrollPulse { 0%,100%{opacity:0.3;} 50%{opacity:1;} }
 
 /* Thumbnail strip */
-.hero-thumbs {
-  position: relative; z-index: 6;
-  display: flex; gap: 3px;
-  background: rgba(8,8,8,0.6); backdrop-filter: blur(12px);
-  border-top: 1px solid var(--line);
-  overflow-x: auto; scrollbar-width: none; -ms-overflow-style: none;
-  flex-shrink: 0;
-}
+.hero-thumbs { position: relative; z-index: 6; display: flex; gap: 3px; background: rgba(8,8,8,0.6); backdrop-filter: blur(12px); border-top: 1px solid var(--line); overflow-x: auto; scrollbar-width: none; -ms-overflow-style: none; flex-shrink: 0; }
 .hero-thumbs::-webkit-scrollbar { display: none; }
-
-.thumb {
-  flex: 0 0 12.5%; min-width: 100px;
-  position: relative; cursor: pointer; overflow: hidden; background: #111;
-}
+.thumb { flex: 0 0 12.5%; min-width: 100px; position: relative; cursor: pointer; overflow: hidden; background: #111; }
 .thumb img { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; transition: filter 0.3s, transform 0.4s; filter: brightness(0.35) grayscale(0.4); }
 .thumb.active img { filter: brightness(0.85); }
 .thumb:hover img { filter: brightness(0.6); transform: scale(1.04); }
@@ -165,13 +58,9 @@ nav {
 .thumb-num { position: absolute; top: 5px; left: 7px; font-family: 'DM Mono', monospace; font-size: 8px; letter-spacing: 0.12em; color: rgba(240,235,224,0.4); }
 .thumb.active .thumb-num { color: var(--warm); }
 
-/* ── WORK ── */
+/* WORK */
 #work { padding: 100px 56px; }
-.work-label {
-  font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.25em;
-  text-transform: uppercase; color: var(--warm); margin-bottom: 48px;
-  display: flex; align-items: center; gap: 20px;
-}
+.work-label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--warm); margin-bottom: 48px; display: flex; align-items: center; gap: 20px; }
 .work-label::after { content:''; flex:1; height:1px; background:var(--line); max-width:120px; }
 
 .work-grid {
@@ -180,22 +69,17 @@ nav {
   grid-template-rows: 320px 260px 320px 220px;
   gap: 3px;
 }
+.work-item { position: relative; overflow: hidden; cursor: pointer; background: #111; }
 .work-item:nth-child(1) { grid-column: 1 / 3; grid-row: 1; }
 .work-item:nth-child(2) { grid-column: 3 / 4; grid-row: 1; }
-.work-item:nth-child(3) { grid-column: 1; grid-row: 2; }
-.work-item:nth-child(4) { grid-column: 2; grid-row: 2; }
-.work-item:nth-child(5) { grid-column: 3; grid-row: 2; }
+.work-item:nth-child(3) { grid-column: 1;     grid-row: 2; }
+.work-item:nth-child(4) { grid-column: 2;     grid-row: 2; }
+.work-item:nth-child(5) { grid-column: 3;     grid-row: 2; }
 .work-item:nth-child(6) { grid-column: 1 / 3; grid-row: 3; }
 .work-item:nth-child(7) { grid-column: 3 / 4; grid-row: 3; }
 .work-item:nth-child(8) { grid-column: 1 / 4; grid-row: 4; }
-
-.work-item {
-  position: relative; overflow: hidden; cursor: pointer; background: #111;
-}
-
 .work-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.7s cubic-bezier(0.22,1,0.36,1), filter 0.5s; filter: brightness(0.82); display: block; }
 .work-item:hover img { transform: scale(1.04); filter: brightness(1); }
-
 .work-caption { position: absolute; bottom: 0; left: 0; right: 0; padding: 24px 24px 20px; background: linear-gradient(to top, rgba(0,0,0,0.88), transparent); transform: translateY(8px); opacity: 0; transition: all 0.4s; }
 .work-item:hover .work-caption { opacity: 1; transform: translateY(0); }
 .work-caption-title { font-size: 17px; font-weight: 300; color: var(--cream); margin-bottom: 4px; }
@@ -225,17 +109,15 @@ footer span { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing:
 .reveal.visible { opacity: 1; transform: translateY(0); }
 
 @media(max-width:768px){
-  nav{padding:20px 24px;} .nav-links{display:none;}
-  .hero-title{bottom:180px;left:24px;right:24px;} .hero-right{display:none;}
-  .hero-counter{right:24px;} .hero-mute{right:24px;bottom:150px;} .hero-progress{bottom:128px;}
-  .thumb{min-width:80px;}
-  #work{padding:72px 24px;}
-  .work-grid{grid-template-columns:1fr;}
-  .work-item:nth-child(1),.work-item:nth-child(2),.work-item:nth-child(3),
-  .work-item:nth-child(4),.work-item:nth-child(5),.work-item:nth-child(6),
-  .work-item:nth-child(7),.work-item:nth-child(8){grid-column:1;aspect-ratio:16/9;}
-  #contact{grid-template-columns:1fr;padding:72px 24px;}
-  footer{padding:20px 24px;flex-direction:column;gap:8px;}
+  nav { padding: 20px 24px; } .nav-links { display: none; }
+  .hero-title { bottom: 180px; left: 24px; right: 24px; } .hero-right { display: none; }
+  .hero-counter { right: 24px; } .hero-mute { right: 24px; bottom: 150px; } .hero-progress { bottom: 128px; }
+  .thumb { min-width: 80px; }
+  #work { padding: 72px 24px; }
+  .work-grid { grid-template-columns: 1fr; grid-template-rows: none; }
+  .work-item { grid-column: 1 !important; grid-row: auto !important; aspect-ratio: 16/9; }
+  #contact { grid-template-columns: 1fr; padding: 72px 24px; }
+  footer { padding: 20px 24px; flex-direction: column; gap: 8px; }
 }
 </style>
 </head>
@@ -249,14 +131,11 @@ footer span { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing:
   </ul>
 </nav>
 
-<!-- HERO -->
 <section class="hero" id="hero">
   <div class="hero-fallback" id="heroFallback"></div>
   <div class="hero-video-wrap"><div id="heroPlayer"></div></div>
   <div class="hero-overlay" id="heroOverlay"></div>
-
   <div class="hero-counter"><span id="heroCurrentNum">1</span> / 8</div>
-
   <div class="hero-title">
     <h1 class="hero-name">Philip<br><em>Lloyd</em></h1>
     <div class="hero-right">
@@ -264,7 +143,6 @@ footer span { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing:
       <p class="hero-desc">6+ years delivering entertainment-led campaigns across film, TV, cinema and experiential.</p>
     </div>
   </div>
-
   <div class="hero-arrows">
     <button class="hero-arrow" id="heroPrev" aria-label="Previous">
       <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
@@ -273,72 +151,50 @@ footer span { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing:
       <svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"/></svg>
     </button>
   </div>
-
   <button class="hero-mute" id="heroMute">
     <svg id="heroMuteIcon" viewBox="0 0 24 24" width="12" height="12"><path d="M11 5L6 9H2v6h4l5 4V5zM23 9l-6 6M17 9l6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/></svg>
     <span id="heroMuteLabel">Muted</span>
   </button>
-
   <div class="scroll-hint"><div class="scroll-line"></div></div>
-
   <div class="hero-progress"><div class="hero-progress-bar" id="heroProgressBar"></div></div>
-
   <div class="hero-thumbs" id="heroThumbs"></div>
 </section>
 
-<!-- WORK -->
 <section id="work">
   <div class="work-label reveal">Selected Work</div>
   <div class="work-grid reveal">
-
-    <!-- 1: Lexus BFI IMAX dusk — wide -->
     <div class="work-item" onclick="openLightbox('Lexus-August-2023-4-_Ocean.jpg')">
       <img src="Lexus-August-2023-4-_Ocean.jpg" alt="Lexus RZ BFI IMAX dusk" loading="lazy">
       <div class="work-caption"><div class="work-caption-title">Lexus RZ — BFI IMAX</div><div class="work-caption-sub">OOH · London · Aug 2023</div></div>
     </div>
-
-    <!-- 2: Lexus BFI IMAX night — single -->
     <div class="work-item" onclick="openLightbox('Lexus-August-2023-6-_Ocean.jpg')">
       <img src="Lexus-August-2023-6-_Ocean.jpg" alt="Lexus RZ BFI IMAX night" loading="lazy">
       <div class="work-caption"><div class="work-caption-title">Lexus RZ — BFI IMAX Night</div><div class="work-caption-sub">OOH · London · Aug 2023</div></div>
     </div>
-
-    <!-- 3: Toyota C-HR Trafford — single -->
     <div class="work-item" onclick="openLightbox('Toyota-NG-C-HR_Jan2024_K54507_11.jpg')">
       <img src="Toyota-NG-C-HR_Jan2024_K54507_11.jpg" alt="Toyota C-HR Trafford OOH" loading="lazy">
       <div class="work-caption"><div class="work-caption-title">Toyota C-HR — Trafford</div><div class="work-caption-sub">OOH · Manchester · Jan 2024</div></div>
     </div>
-
-    <!-- 4: Lexus LBX Oxford Street — wide -->
     <div class="work-item" onclick="openLightbox('Lexus-June-2024-3-_Ocean.jpg')">
       <img src="Lexus-June-2024-3-_Ocean.jpg" alt="Lexus LBX Oxford Street" loading="lazy">
       <div class="work-caption"><div class="work-caption-title">Lexus LBX — Oxford Street</div><div class="work-caption-sub">OOH · London · Jun 2024</div></div>
     </div>
-
-    <!-- 5: Toyota C-HR Elizabeth Line — single -->
     <div class="work-item" onclick="openLightbox('Toyota-NG-C-HR_Jan2024_K54507_03.jpg')">
       <img src="Toyota-NG-C-HR_Jan2024_K54507_03.jpg" alt="Toyota C-HR Elizabeth Line" loading="lazy">
       <div class="work-caption"><div class="work-caption-title">Toyota C-HR — Elizabeth Line</div><div class="work-caption-sub">DOOH · London · Jan 2024</div></div>
     </div>
-
-    <!-- 6: Paralympic "Pause the washing up" — wide -->
     <div class="work-item" onclick="openLightbox('Paralympic_Ad_Pause_I_Big_screen_I_version_3.jpg')">
-      <img src="Paralympic_Ad_Pause_I_Big_screen_I_version_3.jpg" alt="Toyota Paralympics GB — Pause the washing up" loading="lazy">
+      <img src="Paralympic_Ad_Pause_I_Big_screen_I_version_3.jpg" alt="Toyota Paralympics GB" loading="lazy">
       <div class="work-caption"><div class="work-caption-title">Toyota — Paralympics GB</div><div class="work-caption-sub">TV Sponsorship · Channel 4 · 2024</div></div>
     </div>
-
-    <!-- 7: Paralympic "Fast forward" — single -->
     <div class="work-item" onclick="openLightbox('Paralympic_Ad_Pause_I_Big_screen_I_version_2.jpg')">
-      <img src="Paralympic_Ad_Pause_I_Big_screen_I_version_2.jpg" alt="Toyota Paralympics GB — Fast forward" loading="lazy">
+      <img src="Paralympic_Ad_Pause_I_Big_screen_I_version_2.jpg" alt="Toyota Paralympics GB 2" loading="lazy">
       <div class="work-caption"><div class="work-caption-title">Toyota — Paralympics GB</div><div class="work-caption-sub">TV Sponsorship · Channel 4 · 2024</div></div>
     </div>
-
-    <!-- 8: Paralympic "Rewind a 5-0 defeat" — single -->
     <div class="work-item" onclick="openLightbox('Paralympic_Ad_Pause_I_Big_screen_I_version_1.jpg')">
-      <img src="Paralympic_Ad_Pause_I_Big_screen_I_version_1.jpg" alt="Toyota Paralympics GB — Rewind" loading="lazy">
+      <img src="Paralympic_Ad_Pause_I_Big_screen_I_version_1.jpg" alt="Toyota Paralympics GB 3" loading="lazy">
       <div class="work-caption"><div class="work-caption-title">Toyota — Paralympics GB</div><div class="work-caption-sub">TV Sponsorship · Channel 4 · 2024</div></div>
     </div>
-
   </div>
 </section>
 
@@ -350,7 +206,7 @@ footer span { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing:
 <section id="contact">
   <h2 class="contact-heading reveal">Get in<br><em>touch.</em></h2>
   <div class="contact-links reveal">
-    <div class="contact-row"><span class="contact-lbl">Email</span><a class="contact-val" href="/cdn-cgi/l/email-protection#503c3c3f29342038393c646510373d31393c7e333f3d"><span class="__cf_email__" data-cfemail="f9959596809d89919095cdccb99e94989095d79a9694">[email&#160;protected]</span></a></div>
+    <div class="contact-row"><span class="contact-lbl">Email</span><a class="contact-val" href="mailto:lloydphil45@gmail.com">lloydphil45@gmail.com</a></div>
     <div class="contact-row"><span class="contact-lbl">Mobile</span><a class="contact-val" href="tel:+447425153740">+44 7425 153740</a></div>
     <div class="contact-row"><span class="contact-lbl">LinkedIn</span><a class="contact-val" href="https://linkedin.com/in/philip-lloydd" target="_blank">philip-lloydd</a></div>
   </div>
@@ -361,18 +217,17 @@ footer span { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing:
   <span>Account Director · London</span>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="https://www.youtube.com/iframe_api"></script>
+<script src="https://www.youtube.com/iframe_api"></script>
 <script>
-// Videos in your requested order
 const videoIds = [
-  '3FoGwuCYx4g',   // 1 - your pick
-  'a4OSVXWtliY',   // 2 - your pick
-  '0zOlhs-IXCs',   // 3 - your pick
-  '-HvoasdgXYc',   // 4 - your pick
-  'RloQycScUJU',   // 5 - your pick
-  'QAxmcfkEMP4',   // 6
-  'vwfkv6oNa10',   // 7
-  '7Nx8S4PLD5w',   // 8
+  '3FoGwuCYx4g',
+  'a4OSVXWtliY',
+  '0zOlhs-IXCs',
+  '-HvoasdgXYc',
+  'RloQycScUJU',
+  'QAxmcfkEMP4',
+  'vwfkv6oNa10',
+  '7Nx8S4PLD5w',
 ];
 
 let current = 0;
@@ -380,34 +235,25 @@ let isMuted = true;
 let player = null;
 let overlayFadeTimer = null;
 
-// Build thumbnail strip
 const thumbsEl = document.getElementById('heroThumbs');
 videoIds.forEach((id, i) => {
   const t = document.createElement('div');
   t.className = 'thumb' + (i === 0 ? ' active' : '');
-  t.innerHTML = `
-    <img src="https://img.youtube.com/vi/${id}/mqdefault.jpg" alt="Video ${i+1}" loading="lazy">
-    <div class="thumb-active-bar"></div>
-    <span class="thumb-num">0${i+1}</span>
-  `;
-  t.addEventListener('click', () => goTo(i));
+  t.innerHTML = '<img src="https://img.youtube.com/vi/' + id + '/mqdefault.jpg" alt="Video ' + (i+1) + '" loading="lazy"><div class="thumb-active-bar"></div><span class="thumb-num">0' + (i+1) + '</span>';
+  t.addEventListener('click', function() { goTo(i); });
   thumbsEl.appendChild(t);
 });
 
 window.onYouTubeIframeAPIReady = function() {
   player = new YT.Player('heroPlayer', {
     videoId: videoIds[0],
-    playerVars: {
-      autoplay: 1, mute: 1, controls: 0,
-      showinfo: 0, rel: 0, modestbranding: 1,
-      iv_load_policy: 3, disablekb: 1, loop: 0,
-    },
+    playerVars: { autoplay: 1, mute: 1, controls: 0, showinfo: 0, rel: 0, modestbranding: 1, iv_load_policy: 3, disablekb: 1, loop: 0 },
     events: {
-      onReady: (e) => {
+      onReady: function(e) {
         e.target.playVideo();
-        setTimeout(() => document.getElementById('heroFallback').classList.add('hidden'), 2000);
+        setTimeout(function() { document.getElementById('heroFallback').classList.add('hidden'); }, 2000);
       },
-      onStateChange: (e) => {
+      onStateChange: function(e) {
         if (e.data === YT.PlayerState.PLAYING) startProgressBar();
         if (e.data === YT.PlayerState.ENDED) goTo(current + 1);
         if (e.data === YT.PlayerState.PAUSED) stopProgressBar();
@@ -423,8 +269,8 @@ function goTo(index) {
     if (isMuted) player.mute(); else player.unMute();
   }
   document.getElementById('heroCurrentNum').textContent = current + 1;
-  document.querySelectorAll('.thumb').forEach((t, i) => t.classList.toggle('active', i === current));
-  const activeThumb = thumbsEl.children[current];
+  document.querySelectorAll('.thumb').forEach(function(t, i) { t.classList.toggle('active', i === current); });
+  var activeThumb = thumbsEl.children[current];
   if (activeThumb) activeThumb.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
   stopProgressBar();
 }
@@ -432,9 +278,9 @@ function goTo(index) {
 function startProgressBar() {
   stopProgressBar();
   if (!player || !player.getDuration) return;
-  const duration = player.getDuration();
+  var duration = player.getDuration();
   if (!duration) return;
-  const bar = document.getElementById('heroProgressBar');
+  var bar = document.getElementById('heroProgressBar');
   bar.style.transition = 'none';
   bar.style.width = '0%';
   bar.offsetWidth;
@@ -444,45 +290,52 @@ function startProgressBar() {
 }
 
 function stopProgressBar() {
-  const bar = document.getElementById('heroProgressBar');
+  var bar = document.getElementById('heroProgressBar');
   bar.classList.remove('running');
   bar.style.transition = 'none';
   bar.style.width = '0%';
 }
 
 function triggerOverlayFade() {
-  const overlay = document.getElementById('heroOverlay');
+  var overlay = document.getElementById('heroOverlay');
   overlay.classList.add('light');
   clearTimeout(overlayFadeTimer);
-  overlayFadeTimer = setTimeout(() => overlay.classList.remove('light'), 2000);
+  overlayFadeTimer = setTimeout(function() { overlay.classList.remove('light'); }, 2000);
 }
 
-document.getElementById('heroPrev').addEventListener('click', () => { triggerOverlayFade(); goTo(current - 1); });
-document.getElementById('heroNext').addEventListener('click', () => { triggerOverlayFade(); goTo(current + 1); });
+document.getElementById('heroPrev').addEventListener('click', function() { triggerOverlayFade(); goTo(current - 1); });
+document.getElementById('heroNext').addEventListener('click', function() { triggerOverlayFade(); goTo(current + 1); });
 
-document.addEventListener('keydown', e => {
+document.addEventListener('keydown', function(e) {
   if (e.key === 'ArrowLeft') { triggerOverlayFade(); goTo(current - 1); }
   if (e.key === 'ArrowRight') { triggerOverlayFade(); goTo(current + 1); }
   if (e.key === 'Escape') closeLightbox();
 });
 
-document.getElementById('heroMute').addEventListener('click', () => {
+document.getElementById('heroMute').addEventListener('click', function() {
   isMuted = !isMuted;
   document.getElementById('heroMuteLabel').textContent = isMuted ? 'Muted' : 'Sound on';
-  document.getElementById('heroMuteIcon').innerHTML = isMuted
-    ? `<path d="M11 5L6 9H2v6h4l5 4V5zM23 9l-6 6M17 9l6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/>`
-    : `<path d="M11 5L6 9H2v6h4l5 4V5z" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/><path d="M15.54 8.46a5 5 0 010 7.07M19.07 4.93a10 10 0 010 14.14" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/>`;
+  var iconMuted = '<path d="M11 5L6 9H2v6h4l5 4V5zM23 9l-6 6M17 9l6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/>';
+  var iconOn = '<path d="M11 5L6 9H2v6h4l5 4V5z" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/><path d="M15.54 8.46a5 5 0 010 7.07M19.07 4.93a10 10 0 010 14.14" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/>';
+  document.getElementById('heroMuteIcon').innerHTML = isMuted ? iconMuted : iconOn;
   if (player) { if (isMuted) player.mute(); else player.unMute(); }
 });
 
-// Scroll reveal
-const reveals = document.querySelectorAll('.reveal');
-const obs = new IntersectionObserver(entries => {
-  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+var reveals = document.querySelectorAll('.reveal');
+var obs = new IntersectionObserver(function(entries) {
+  entries.forEach(function(e) { if (e.isIntersecting) e.target.classList.add('visible'); });
 }, { threshold: 0.1 });
-reveals.forEach(r => obs.observe(r));
+reveals.forEach(function(r) { obs.observe(r); });
 
-// Lightbox
 function openLightbox(src) {
   document.getElementById('lightboxImg').src = src;
-  document.getE
+  document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('open');
+  document.body.style.overflow = '';
+}
+</script>
+</body>
+</html>
