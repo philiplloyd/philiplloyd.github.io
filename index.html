@@ -25,32 +25,31 @@ body {
   overflow-x: hidden;
 }
 
+/* NAV */
 nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 99;
-  padding: 28px 56px; display: flex; justify-content: space-between; align-items: center;
+  padding: 28px 56px;
+  display: flex; justify-content: space-between; align-items: center;
   background: linear-gradient(to bottom, rgba(8,8,8,0.9), transparent);
+  transition: opacity 0.5s;
 }
+nav.faded { opacity: 0.15; }
 .nav-logo { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--warm); }
 .nav-links { display: flex; gap: 40px; list-style: none; }
 .nav-links a { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; text-decoration: none; color: rgba(240,235,224,0.45); transition: color 0.3s; }
 .nav-links a:hover { color: var(--cream); }
 
-/* HERO */
+/* ── HERO ── */
 .hero {
-  height: 100vh; position: relative;
-  display: flex; align-items: flex-end;
-  padding: 0 56px 72px; overflow: hidden;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
 }
 
-.hero-fallback {
-  position: absolute; inset: 0;
-  background-image: url('Lexus-August-2023-6-_Ocean.jpg');
-  background-size: cover; background-position: center;
-  filter: brightness(0.5); z-index: 0;
-  transition: opacity 1.5s ease;
-}
-.hero-fallback.hidden { opacity: 0; }
-
+/* Full-bleed YouTube background */
 .hero-video-wrap {
   position: absolute; inset: 0; z-index: 0; pointer-events: none; overflow: hidden;
 }
@@ -61,14 +60,37 @@ nav {
   min-width: 100vw; min-height: 56.25vw;
 }
 
-.hero-overlay {
+/* Fallback image */
+.hero-fallback {
   position: absolute; inset: 0; z-index: 1;
-  background: linear-gradient(to top, rgba(8,8,8,0.95) 0%, rgba(8,8,8,0.55) 40%, rgba(8,8,8,0.35) 100%);
+  background-image: url('Lexus-August-2023-6-_Ocean.jpg');
+  background-size: cover; background-position: center;
+  filter: brightness(0.5);
+  transition: opacity 1.5s ease;
 }
+.hero-fallback.hidden { opacity: 0; pointer-events: none; }
 
-.hero-content {
-  position: relative; z-index: 2;
-  display: flex; justify-content: space-between; align-items: flex-end; width: 100%;
+/* Dark overlay — fades on arrow interaction */
+.hero-overlay {
+  position: absolute; inset: 0; z-index: 2;
+  background: linear-gradient(to top,
+    rgba(8,8,8,0.97) 0%,
+    rgba(8,8,8,0.6) 35%,
+    rgba(8,8,8,0.35) 65%,
+    rgba(8,8,8,0.2) 100%
+  );
+  transition: opacity 0.6s ease;
+}
+.hero-overlay.light { opacity: 0.4; }
+
+/* Name + role — sits in middle-ish of hero */
+.hero-title {
+  position: absolute;
+  bottom: 220px; left: 56px; right: 56px;
+  z-index: 5;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
 }
 .hero-name { font-size: clamp(64px, 9vw, 120px); font-weight: 300; line-height: 0.9; letter-spacing: -0.02em; }
 .hero-name em { font-style: italic; color: var(--warm); }
@@ -76,92 +98,124 @@ nav {
 .hero-role { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--warm); }
 .hero-desc { font-size: 17px; font-weight: 300; line-height: 1.6; color: rgba(240,235,224,0.65); max-width: 340px; }
 
+/* Side arrows */
+.hero-arrows {
+  position: absolute; top: 0; bottom: 0; left: 0; right: 0;
+  z-index: 6; pointer-events: none;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 24px;
+}
+.hero-arrow {
+  pointer-events: all;
+  width: 56px; height: 56px;
+  border: 1px solid rgba(240,235,224,0.25);
+  border-radius: 50%;
+  background: rgba(8,8,8,0.45);
+  backdrop-filter: blur(10px);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s;
+  color: rgba(240,235,224,0.7);
+}
+.hero-arrow:hover { border-color: var(--warm); color: var(--warm); background: rgba(200,169,126,0.15); }
+.hero-arrow svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+
+/* Video counter */
+.hero-counter {
+  position: absolute; top: 90px; right: 56px; z-index: 6;
+  font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.15em; color: rgba(240,235,224,0.4);
+  transition: opacity 0.5s;
+}
+.hero-counter span { color: var(--warm); }
+
+/* Mute button */
+.hero-mute {
+  position: absolute; bottom: 180px; right: 56px; z-index: 6;
+  font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase;
+  color: rgba(240,235,224,0.45); background: rgba(0,0,0,0.5); backdrop-filter: blur(8px);
+  border: 1px solid rgba(240,235,224,0.12); border-radius: 100px; padding: 8px 16px;
+  cursor: pointer; transition: all 0.3s; display: flex; align-items: center; gap: 8px;
+}
+.hero-mute:hover { color: var(--warm); border-color: var(--warm); }
+
+/* Progress bar across bottom of video area */
+.hero-progress {
+  position: absolute; bottom: 155px; left: 0; right: 0; z-index: 6;
+  height: 1px; background: rgba(255,255,255,0.08);
+}
+.hero-progress-bar {
+  height: 100%; background: var(--warm);
+  width: 0%; transition: none;
+}
+.hero-progress-bar.running { transition: width linear; }
+
+/* ── THUMBNAIL STRIP — embedded at bottom of hero ── */
+.hero-thumbs {
+  position: relative; z-index: 6;
+  display: flex; gap: 3px;
+  padding: 0 0 0;
+  background: rgba(8,8,8,0.6);
+  backdrop-filter: blur(12px);
+  border-top: 1px solid var(--line);
+  overflow-x: auto; scrollbar-width: none; -ms-overflow-style: none;
+  flex-shrink: 0;
+}
+.hero-thumbs::-webkit-scrollbar { display: none; }
+
+.thumb {
+  flex: 0 0 12.5%;
+  min-width: 100px;
+  position: relative; cursor: pointer; overflow: hidden; background: #111;
+}
+.thumb img {
+  width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block;
+  transition: filter 0.3s, transform 0.4s;
+  filter: brightness(0.35) grayscale(0.4);
+}
+.thumb.active img { filter: brightness(0.85); }
+.thumb:hover img { filter: brightness(0.6); transform: scale(1.04); }
+
+.thumb-active-bar {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  height: 2px; background: var(--warm);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 0.3s;
+}
+.thumb.active .thumb-active-bar { transform: scaleX(1); }
+
+.thumb-num {
+  position: absolute; top: 5px; left: 7px;
+  font-family: 'DM Mono', monospace; font-size: 8px; letter-spacing: 0.12em;
+  color: rgba(240,235,224,0.4);
+}
+.thumb.active .thumb-num { color: var(--warm); }
+
+/* Scroll hint */
+.scroll-hint {
+  position: absolute; bottom: 72px; left: 50%; transform: translateX(-50%);
+  z-index: 6; display: flex; flex-direction: column; align-items: center; gap: 0;
+}
 .scroll-line {
-  width: 1px; height: 48px;
-  background: linear-gradient(to bottom, var(--warm), transparent);
+  width: 1px; height: 40px;
+  background: linear-gradient(to bottom, rgba(200,169,126,0.6), transparent);
   animation: scrollPulse 2s ease infinite;
-  margin: 28px auto 0; position: relative; z-index: 2;
 }
 @keyframes scrollPulse { 0%,100%{opacity:0.3;} 50%{opacity:1;} }
 
-/* VIDEO CAROUSEL */
-#videos { background: #040404; }
-
-.video-section-header {
-  padding: 80px 56px 0;
-  display: flex; justify-content: space-between; align-items: flex-end;
-}
-.section-label {
+/* ── WORK ── */
+#work { padding: 100px 56px; }
+.work-label {
   font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.25em;
-  text-transform: uppercase; color: var(--warm); display: flex; align-items: center; gap: 20px;
+  text-transform: uppercase; color: var(--warm); margin-bottom: 48px;
+  display: flex; align-items: center; gap: 20px;
 }
-.section-label::after { content:''; display:block; width:60px; height:1px; background:var(--line); }
-.carousel-counter { font-family:'DM Mono',monospace; font-size:11px; letter-spacing:0.15em; color:var(--dim); }
-.carousel-counter span { color:var(--warm); }
-
-.video-main { position:relative; width:100%; margin-top:40px; background:#000; }
-.video-main iframe { width:100%; aspect-ratio:16/9; border:none; display:block; }
-.video-main::after {
-  content:''; position:absolute; bottom:0; left:0; right:0; height:120px;
-  background:linear-gradient(to top,rgba(4,4,4,1),transparent);
-  z-index:2; pointer-events:none;
-}
-
-.video-arrows {
-  position:absolute; top:50%; transform:translateY(-50%);
-  z-index:10; width:100%; display:flex; justify-content:space-between;
-  padding:0 24px; pointer-events:none;
-}
-.arrow-btn {
-  pointer-events:all; width:52px; height:52px;
-  border:1px solid rgba(240,235,224,0.2); border-radius:50%;
-  background:rgba(0,0,0,0.5); backdrop-filter:blur(8px);
-  display:flex; align-items:center; justify-content:center;
-  cursor:pointer; transition:all 0.3s; color:rgba(240,235,224,0.6);
-}
-.arrow-btn:hover { border-color:var(--warm); color:var(--warm); background:rgba(200,169,126,0.15); }
-.arrow-btn svg { width:18px; height:18px; fill:none; stroke:currentColor; stroke-width:1.5; stroke-linecap:round; stroke-linejoin:round; }
-
-.mute-btn {
-  position:absolute; bottom:20px; right:24px; z-index:10;
-  font-family:'DM Mono',monospace; font-size:9px; letter-spacing:0.2em; text-transform:uppercase;
-  color:rgba(240,235,224,0.5); background:rgba(0,0,0,0.6); backdrop-filter:blur(8px);
-  border:1px solid rgba(240,235,224,0.15); border-radius:100px; padding:8px 16px;
-  cursor:pointer; transition:all 0.3s; display:flex; align-items:center; gap:8px;
-}
-.mute-btn:hover { color:var(--warm); border-color:var(--warm); }
-
-/* Auto-advance indicator */
-.autoplay-bar {
-  position: absolute; bottom: 0; left: 0;
-  height: 2px; background: var(--warm);
-  width: 0%; z-index: 10;
-  transition: none;
-}
-.autoplay-bar.animating {
-  transition: width linear;
-}
-
-.thumb-strip { display:flex; gap:3px; padding:0 0 64px; overflow-x:auto; scrollbar-width:none; -ms-overflow-style:none; }
-.thumb-strip::-webkit-scrollbar { display:none; }
-.thumb { flex:0 0 calc(12.5% - 3px); min-width:120px; position:relative; cursor:pointer; overflow:hidden; background:#111; }
-.thumb img { width:100%; aspect-ratio:16/9; object-fit:cover; display:block; transition:filter 0.3s,transform 0.4s; filter:brightness(0.4) grayscale(0.3); }
-.thumb.active img { filter:brightness(0.9); }
-.thumb:hover img { filter:brightness(0.7); transform:scale(1.03); }
-.thumb-bar { position:absolute; bottom:0; left:0; height:2px; background:var(--warm); width:0%; }
-.thumb.active .thumb-bar { width:100%; }
-.thumb-num { position:absolute; top:6px; left:8px; font-family:'DM Mono',monospace; font-size:8px; letter-spacing:0.15em; color:rgba(240,235,224,0.5); }
-.thumb.active .thumb-num { color:var(--warm); }
-
-/* WORK */
-#work { padding:100px 56px; }
-.work-label { font-family:'DM Mono',monospace; font-size:10px; letter-spacing:0.25em; text-transform:uppercase; color:var(--warm); margin-bottom:48px; display:flex; align-items:center; gap:20px; }
 .work-label::after { content:''; flex:1; height:1px; background:var(--line); max-width:120px; }
-.work-grid { display:grid; grid-template-columns:1fr 1fr; gap:3px; }
-.work-item { position:relative; overflow:hidden; cursor:pointer; background:#111; }
-.work-item:first-child { aspect-ratio:4/3; }
-.work-item:nth-child(2) { grid-row:1/3; }
-.work-item:nth-child(3) { aspect-ratio:4/3; }
+
+.work-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3px; }
+.work-item { position: relative; overflow: hidden; cursor: pointer; background: #111; }
+.work-item:first-child { aspect-ratio: 4/3; }
+.work-item:nth-child(2) { grid-row: 1/3; }
+.work-item:nth-child(3) { aspect-ratio: 4/3; }
 .work-item img { width:100%; height:100%; object-fit:cover; transition:transform 0.7s cubic-bezier(0.22,1,0.36,1),filter 0.5s; filter:brightness(0.85); display:block; }
 .work-item:hover img { transform:scale(1.04); filter:brightness(1); }
 .work-caption { position:absolute; bottom:0; left:0; right:0; padding:28px 28px 24px; background:linear-gradient(to top,rgba(0,0,0,0.85),transparent); transform:translateY(8px); opacity:0; transition:all 0.4s; }
@@ -169,12 +223,14 @@ nav {
 .work-caption-title { font-size:18px; font-weight:300; color:var(--cream); margin-bottom:4px; }
 .work-caption-sub { font-family:'DM Mono',monospace; font-size:9px; letter-spacing:0.18em; text-transform:uppercase; color:var(--warm); }
 
+/* LIGHTBOX */
 .lightbox { position:fixed; inset:0; background:rgba(0,0,0,0.95); z-index:200; display:flex; align-items:center; justify-content:center; opacity:0; pointer-events:none; transition:opacity 0.4s; }
 .lightbox.open { opacity:1; pointer-events:all; }
 .lightbox img { max-width:90vw; max-height:88vh; object-fit:contain; }
 .lightbox-close { position:absolute; top:28px; right:36px; font-family:'DM Mono',monospace; font-size:11px; letter-spacing:0.2em; color:var(--dim); cursor:pointer; text-transform:uppercase; transition:color 0.3s; }
 .lightbox-close:hover { color:var(--cream); }
 
+/* CONTACT */
 #contact { border-top:1px solid var(--line); display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:center; padding:120px 56px; }
 .contact-heading { font-size:clamp(48px,5vw,72px); font-weight:300; line-height:1.05; letter-spacing:-0.02em; }
 .contact-heading em { font-style:italic; color:var(--warm); }
@@ -192,11 +248,16 @@ footer span { font-family:'DM Mono',monospace; font-size:9px; letter-spacing:0.1
 
 @media(max-width:768px){
   nav{padding:20px 24px;} .nav-links{display:none;}
-  .hero{padding:0 24px 56px;} .hero-right{display:none;}
-  .hero-video-wrap iframe{width:100vw;height:56.25vw;min-height:unset;}
-  .video-section-header{padding:56px 24px 0;} .thumb{min-width:90px;}
-  #work{padding:72px 24px;} .work-grid{grid-template-columns:1fr;}
-  .work-item:nth-child(2){grid-row:auto;} .work-item{aspect-ratio:16/9;}
+  .hero-title{bottom:180px; left:24px; right:24px;}
+  .hero-right{display:none;}
+  .hero-counter{right:24px;}
+  .hero-mute{right:24px; bottom:150px;}
+  .hero-progress{bottom:128px;}
+  .thumb{min-width:80px;}
+  #work{padding:72px 24px;}
+  .work-grid{grid-template-columns:1fr;}
+  .work-item:nth-child(2){grid-row:auto;}
+  .work-item{aspect-ratio:16/9;}
   #contact{grid-template-columns:1fr;padding:72px 24px;}
   footer{padding:20px 24px;flex-direction:column;gap:8px;}
 }
@@ -204,62 +265,64 @@ footer span { font-family:'DM Mono',monospace; font-size:9px; letter-spacing:0.1
 </head>
 <body>
 
-<nav>
+<nav id="mainNav">
   <div class="nav-logo">Philip Lloyd</div>
   <ul class="nav-links">
-    <li><a href="#videos">Film</a></li>
     <li><a href="#work">Work</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
 </nav>
 
-<!-- HERO -->
-<section class="hero">
+<!-- ── HERO ── -->
+<section class="hero" id="hero">
+
   <div class="hero-fallback" id="heroFallback"></div>
+
   <div class="hero-video-wrap">
-    <!-- Hero uses a separate player div, controlled via YT API -->
     <div id="heroPlayer"></div>
   </div>
-  <div class="hero-overlay"></div>
-  <div class="hero-content">
+
+  <div class="hero-overlay" id="heroOverlay"></div>
+
+  <!-- Counter -->
+  <div class="hero-counter"><span id="heroCurrentNum">1</span> / 8</div>
+
+  <!-- Name -->
+  <div class="hero-title">
     <h1 class="hero-name">Philip<br><em>Lloyd</em></h1>
     <div class="hero-right">
       <span class="hero-role">Account Director · London</span>
       <p class="hero-desc">6+ years delivering entertainment-led campaigns across film, TV, cinema and experiential.</p>
     </div>
   </div>
-  <div class="scroll-line"></div>
-</section>
 
-<!-- VIDEO CAROUSEL -->
-<section id="videos">
-  <div class="video-section-header reveal">
-    <div class="section-label">Film &amp; Campaign</div>
-    <div class="carousel-counter"><span id="currentSlide">1</span> / 8</div>
-  </div>
-
-  <div class="video-main" id="videoMain">
-    <!-- Carousel uses a second YT player div -->
-    <div id="carouselPlayer" style="width:100%;aspect-ratio:16/9;"></div>
-
-    <div class="autoplay-bar" id="autoplayBar"></div>
-
-    <div class="video-arrows">
-      <button class="arrow-btn" id="prevBtn" aria-label="Previous">
-        <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
-      </button>
-      <button class="arrow-btn" id="nextBtn" aria-label="Next">
-        <svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"/></svg>
-      </button>
-    </div>
-
-    <button class="mute-btn" id="muteBtn">
-      <svg id="muteIcon" viewBox="0 0 24 24" width="12" height="12"><path d="M11 5L6 9H2v6h4l5 4V5zM23 9l-6 6M17 9l6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/></svg>
-      <span id="muteLabel">Muted</span>
+  <!-- Arrows -->
+  <div class="hero-arrows">
+    <button class="hero-arrow" id="heroPrev" aria-label="Previous video">
+      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+    </button>
+    <button class="hero-arrow" id="heroNext" aria-label="Next video">
+      <svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"/></svg>
     </button>
   </div>
 
-  <div class="thumb-strip" id="thumbStrip"></div>
+  <!-- Mute -->
+  <button class="hero-mute" id="heroMute">
+    <svg id="heroMuteIcon" viewBox="0 0 24 24" width="12" height="12"><path d="M11 5L6 9H2v6h4l5 4V5zM23 9l-6 6M17 9l6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/></svg>
+    <span id="heroMuteLabel">Muted</span>
+  </button>
+
+  <!-- Scroll hint -->
+  <div class="scroll-hint"><div class="scroll-line"></div></div>
+
+  <!-- Progress bar -->
+  <div class="hero-progress">
+    <div class="hero-progress-bar" id="heroProgressBar"></div>
+  </div>
+
+  <!-- Thumbnail strip — anchored to bottom of hero -->
+  <div class="hero-thumbs" id="heroThumbs"></div>
+
 </section>
 
 <!-- WORK -->
@@ -300,11 +363,9 @@ footer span { font-family:'DM Mono',monospace; font-size:9px; letter-spacing:0.1
   <span>Account Director · London</span>
 </footer>
 
-<!-- YouTube IFrame API -->
 <script src="https://www.youtube.com/iframe_api"></script>
-
 <script>
-const videos = [
+const videoIds = [
   'vwfkv6oNa10',
   '3FoGwuCYx4g',
   'a4OSVXWtliY',
@@ -317,166 +378,146 @@ const videos = [
 
 let current = 0;
 let isMuted = true;
-let heroPlayer = null;
-let carouselPlayer = null;
-let autoplayTimer = null;
+let player = null;
+let overlayFadeTimer = null;
 
-// ── YouTube API ready callback ──
+// Build thumbnail strip
+const thumbsEl = document.getElementById('heroThumbs');
+videoIds.forEach((id, i) => {
+  const t = document.createElement('div');
+  t.className = 'thumb' + (i === 0 ? ' active' : '');
+  t.innerHTML = `
+    <img src="https://img.youtube.com/vi/${id}/mqdefault.jpg" alt="Video ${i+1}" loading="lazy">
+    <div class="thumb-active-bar"></div>
+    <span class="thumb-num">0${i < 9 ? i+1 : i+1}</span>
+  `;
+  t.addEventListener('click', () => goTo(i));
+  thumbsEl.appendChild(t);
+});
+
+// YT API ready
 window.onYouTubeIframeAPIReady = function() {
-
-  // Hero background player — looping, muted, no controls
-  heroPlayer = new YT.Player('heroPlayer', {
-    videoId: videos[0],
+  player = new YT.Player('heroPlayer', {
+    videoId: videoIds[0],
     playerVars: {
       autoplay: 1,
       mute: 1,
-      loop: 1,
-      playlist: videos[0],
       controls: 0,
       showinfo: 0,
       rel: 0,
       modestbranding: 1,
       iv_load_policy: 3,
       disablekb: 1,
+      loop: 0,
     },
     events: {
-      onReady: function(e) {
+      onReady: (e) => {
         e.target.playVideo();
-        // Fade out fallback image once hero video starts
         setTimeout(() => {
           document.getElementById('heroFallback').classList.add('hidden');
         }, 2000);
       },
-      onStateChange: function(e) {
-        // Hero: when video ends, play next one in background
-        if(e.data === YT.PlayerState.ENDED) {
-          const nextHeroIndex = (videos.indexOf(heroPlayer.getVideoData().video_id) + 1) % videos.length;
-          heroPlayer.loadVideoById({ videoId: videos[nextHeroIndex], suggestedQuality: 'hd720' });
+      onStateChange: (e) => {
+        if (e.data === YT.PlayerState.PLAYING) {
+          startProgressBar();
         }
-      }
-    }
-  });
-
-  // Carousel player
-  carouselPlayer = new YT.Player('carouselPlayer', {
-    videoId: videos[0],
-    playerVars: {
-      autoplay: 1,
-      mute: 1,
-      controls: 1,
-      rel: 0,
-      modestbranding: 1,
-    },
-    events: {
-      onReady: function(e) {
-        e.target.playVideo();
-      },
-      onStateChange: function(e) {
-        if(e.data === YT.PlayerState.ENDED) {
-          // Auto-advance to next video
+        if (e.data === YT.PlayerState.ENDED) {
           goTo(current + 1);
         }
-        // Clear progress bar animation when manually interacted
-        if(e.data === YT.PlayerState.PLAYING) {
-          startAutoplayBar();
-        } else {
-          stopAutoplayBar();
+        if (e.data === YT.PlayerState.PAUSED) {
+          stopProgressBar();
         }
       }
     }
   });
 };
 
-// ── Autoplay progress bar ──
-let barTimeout = null;
+// Navigate to a video
+function goTo(index) {
+  current = (index + videoIds.length) % videoIds.length;
 
-function startAutoplayBar() {
-  stopAutoplayBar();
-  if(!carouselPlayer) return;
-  const duration = carouselPlayer.getDuration();
-  if(!duration) return;
-  const bar = document.getElementById('autoplayBar');
+  if (player && player.loadVideoById) {
+    player.loadVideoById(videoIds[current]);
+    if (isMuted) player.mute(); else player.unMute();
+  }
+
+  document.getElementById('heroCurrentNum').textContent = current + 1;
+  document.querySelectorAll('.thumb').forEach((t, i) => t.classList.toggle('active', i === current));
+
+  const activeThumb = thumbsEl.children[current];
+  if (activeThumb) activeThumb.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+
+  stopProgressBar();
+}
+
+// Progress bar
+let progressInterval = null;
+
+function startProgressBar() {
+  stopProgressBar();
+  if (!player || !player.getDuration) return;
+  const bar = document.getElementById('heroProgressBar');
   bar.style.transition = 'none';
   bar.style.width = '0%';
-  // Force reflow
-  bar.offsetWidth;
-  bar.classList.add('animating');
+  bar.offsetWidth; // reflow
+  const duration = player.getDuration();
+  if (!duration) return;
+  bar.classList.add('running');
   bar.style.transitionDuration = duration + 's';
   bar.style.width = '100%';
 }
 
-function stopAutoplayBar() {
-  const bar = document.getElementById('autoplayBar');
-  bar.classList.remove('animating');
+function stopProgressBar() {
+  const bar = document.getElementById('heroProgressBar');
+  bar.classList.remove('running');
   bar.style.transition = 'none';
   bar.style.width = '0%';
 }
 
-// ── Navigate carousel ──
-function goTo(index) {
-  current = (index + videos.length) % videos.length;
-  stopAutoplayBar();
-
-  if(carouselPlayer && carouselPlayer.loadVideoById) {
-    carouselPlayer.loadVideoById(videos[current]);
-    if(isMuted) carouselPlayer.mute();
-    else carouselPlayer.unMute();
-  }
-
-  document.getElementById('currentSlide').textContent = current + 1;
-  document.querySelectorAll('.thumb').forEach((t, i) => t.classList.toggle('active', i === current));
-  const activeThumb = document.getElementById('thumbStrip').children[current];
-  if(activeThumb) activeThumb.scrollIntoView({ behavior:'smooth', block:'nearest', inline:'center' });
+// Overlay fade on arrow interaction
+function triggerOverlayFade() {
+  const overlay = document.getElementById('heroOverlay');
+  overlay.classList.add('light');
+  clearTimeout(overlayFadeTimer);
+  overlayFadeTimer = setTimeout(() => {
+    overlay.classList.remove('light');
+  }, 2000);
 }
 
-document.getElementById('prevBtn').addEventListener('click', () => goTo(current - 1));
-document.getElementById('nextBtn').addEventListener('click', () => goTo(current + 1));
-
-document.addEventListener('keydown', e => {
-  if(e.key === 'ArrowLeft') goTo(current - 1);
-  if(e.key === 'ArrowRight') goTo(current + 1);
-  if(e.key === 'Escape') closeLightbox();
+document.getElementById('heroPrev').addEventListener('click', () => {
+  triggerOverlayFade();
+  goTo(current - 1);
+});
+document.getElementById('heroNext').addEventListener('click', () => {
+  triggerOverlayFade();
+  goTo(current + 1);
 });
 
-// ── Mute toggle ──
-const muteBtn = document.getElementById('muteBtn');
-const muteLabel = document.getElementById('muteLabel');
-const muteIcon = document.getElementById('muteIcon');
+// Keyboard
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowLeft') { triggerOverlayFade(); goTo(current - 1); }
+  if (e.key === 'ArrowRight') { triggerOverlayFade(); goTo(current + 1); }
+  if (e.key === 'Escape') closeLightbox();
+});
 
-muteBtn.addEventListener('click', () => {
+// Mute toggle
+document.getElementById('heroMute').addEventListener('click', () => {
   isMuted = !isMuted;
-  muteLabel.textContent = isMuted ? 'Muted' : 'Sound on';
-  muteIcon.innerHTML = isMuted
+  document.getElementById('heroMuteLabel').textContent = isMuted ? 'Muted' : 'Sound on';
+  document.getElementById('heroMuteIcon').innerHTML = isMuted
     ? `<path d="M11 5L6 9H2v6h4l5 4V5zM23 9l-6 6M17 9l6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/>`
     : `<path d="M11 5L6 9H2v6h4l5 4V5z" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/><path d="M15.54 8.46a5 5 0 010 7.07M19.07 4.93a10 10 0 010 14.14" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/>`;
-  if(carouselPlayer) {
-    if(isMuted) carouselPlayer.mute();
-    else carouselPlayer.unMute();
-  }
+  if (player) { if (isMuted) player.mute(); else player.unMute(); }
 });
 
-// ── Thumbnail strip ──
-const stripEl = document.getElementById('thumbStrip');
-videos.forEach((id, i) => {
-  const t = document.createElement('div');
-  t.className = 'thumb' + (i === 0 ? ' active' : '');
-  t.innerHTML = `
-    <img src="https://img.youtube.com/vi/${id}/mqdefault.jpg" alt="Video ${i+1}" loading="lazy">
-    <div class="thumb-bar"></div>
-    <span class="thumb-num">0${i+1}</span>
-  `;
-  t.addEventListener('click', () => goTo(i));
-  stripEl.appendChild(t);
-});
-
-// ── Scroll reveal ──
+// Scroll reveal
 const reveals = document.querySelectorAll('.reveal');
 const obs = new IntersectionObserver(entries => {
-  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
 }, { threshold: 0.1 });
 reveals.forEach(r => obs.observe(r));
 
-// ── Lightbox ──
+// Lightbox
 function openLightbox(src) {
   document.getElementById('lightboxImg').src = src;
   document.getElementById('lightbox').classList.add('open');
